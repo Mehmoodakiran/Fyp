@@ -11,7 +11,7 @@ import {
 } from "../controllers/hotelController.js";
 import { verifyAdmin } from "../utils/verifyToken.js";
 import hotelmodels from "../models/hotelmodels.js";
-
+import upload from "../utils/multer.js";
 const router = express.Router();
 
 //CREATE
@@ -23,9 +23,11 @@ router.put("/:id", verifyAdmin, updateHotel);
 router.delete("/:id", verifyAdmin, deleteHotel);
 //GET
 
-router.get("/:id", getHotel);
+router.get("/find/:id", getHotel);
 //GET ALL
 
+
+// router.get("/find/:id", getHotel);
 router.get("/", getHotels);
 router.get("/countByCity", countByCity);
 router.get("/countByType", countByType);

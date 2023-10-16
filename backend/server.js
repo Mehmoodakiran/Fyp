@@ -8,9 +8,9 @@ import userRoute from "./routes/userRoutes.js";
 import hotelsRoute from "./routes/hotelRoutes.js";
 import roomsRoute from "./routes/roomsRoutes.js";
 import bookingsRoute from "./routes/bookingsRoutes.js";
-import fileRoutes from "./routes/fileRoutes.js";
-// import cookieParser from "cookie-parser";
-// import cors from "cors";
+import uploadRoute from "./routes/fileRoutes.js";
+
+
 
 
 
@@ -31,7 +31,7 @@ const connect = async() => {
 mongoose.connection.on("disconnected", () => {
     console.log("mongoDB disconnected!");
 });
-
+  
 //middlewares
 app.use(cors());
 app.use(cookieParser());
@@ -42,12 +42,14 @@ app.use("/api/user", userRoute);
 app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 app.use("/api/bookings", bookingsRoute);
-app.use("/api/file", fileRoutes);
+app.use("/api/file", uploadRoute);
+
 
 
 
 
 app.use((err, req, res, next) => {
+    console.log("error",err)
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "Something went wrong!";
     return res.status(errorStatus).json({
@@ -62,4 +64,4 @@ app.listen(process.env.PORT, () => {
     connect();
     console.log(`Server listen on port ${process.env.PORT}`);
     console.log("Express Server is Started.");
-});
+}); 

@@ -1,5 +1,5 @@
 .header {
-    background-color: #003580;
+    background-color: hwb(136 10% 51%); 
     color: white;
     display: flex;
     justify-content: center;
@@ -16,37 +16,48 @@
     margin: 20px 0px 0px 0px;
 }
 
-.headerList {
+/* .headerList {
     display: flex;
     gap: 40px;
     margin-bottom: 50px;
-}
+} */
 
-.headerListItem {
+/* .headerListItem {
     display: flex;
     align-items: center;
     gap: 10px;
-}
+} */
 
-.headerListItem.active {
+/* .headerListItem.active {
     border: 1px solid white;
     padding: 10px;
     border-radius: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid #3faa46;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-
+.headerListItem.active:hover{
+    background-color: #3faa46;
+    color: white;
+} */
 .headerDesc {
     margin: 20px 0px;
 }
 
 .headerBtn {
-    background-color: #0071c2;
-    color: white;
-    font-weight: 500;
-    border: none;
-    padding: 10px;
+    padding: 8px 15px;
     cursor: pointer;
+    color: #3faa46;
+    background-color: transparent;
+    border: 2px solid #3faa46;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-
+.headerBtn:hover {
+    background-color: #3faa46;
+    color: white;
+}
 .headerSearch {
     height: 30px;
     background-color: white;
@@ -117,8 +128,8 @@
 .optionCounterButton {
     width: 30px;
     height: 30px;
-    border: 1px solid #0071c2;
-    color: #0071c2;
+    border: 1px solid rgb(96, 230, 55);
+    color: rgb(96, 230, 55);
     cursor: pointer;
     background-color: white;
 }

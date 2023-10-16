@@ -1,29 +1,75 @@
-.footer {
-    width: 100%;
-    width: 1024px;
-    font-size: 12px;
-}
 
-.fLists {
-    display: flex;
+ .footer {
+    background: var(--secondarycolor);
+    width: 80%;
+    font-size: 12px;
+  }
+  
+  .sectionContainer {
+    gap: 2.5rem;
+  }
+  
+  .gridOne {
+    gap: 1rem;
+    justify-content: center;
+    margin: auto;
+  }
+  .gridOne.p {
+    justify-content: center;
+    text-align: center;
+  }
+  .logoDiv .Logo {
+    width: 30%;
+    height: auto;
+  }
+  
+  .socialIcon {
+    margin-top: 1rem;
+    gap: 1rem;
+  }
+  
+  .socialIcon .icon {
+    width: 30px;
+    height: 50px;
+    border-radius: 3rem;
+    border: 1px solid var(--bordercolor);
+    box-shadow: var(--boxshadow);
+    padding: 0.4rem;
+    color: var(--greytext);
+  }
+  
+  .socialIcon .icon:hover {
+    background: var(--primarycolor);
+    transform: translateY(-7px);
+    transition: var(--transition);
+    border: 1px solid var(--primarycolor);
+    color: var(--whitecolor);
+  }
+  
+  
+  .fLists{
     width: 100%;
+    display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
-}
-
-.fList {
+  }
+  
+  .fList{
     list-style: none;
     padding: 0;
-}
-
-.fListItem {
-    margin-bottom: 10px;
+  }
+  
+  .fListItem{
+    margin-bottom: 20px;
     color: #003580;
     cursor: pointer;
-}
-
-.fText {
+  }
+  .copyRightDiv {
+      justify-content: center;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    gap: 1rem;
+    border-top: 1px solid var(--greytext);
     text-align: center;
-    font-size: 10px;
-    color: gray;
-}
+  } 
+  

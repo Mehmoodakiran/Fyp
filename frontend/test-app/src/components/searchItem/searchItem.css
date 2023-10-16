@@ -23,7 +23,7 @@
 
 .siTitle {
     font-size: 20px;
-    color: #0071c2;
+    color:  #008009;
 }
 
 .siDistance {
@@ -32,7 +32,7 @@
 
 .siTaxiOp {
     font-size: 12px;
-    background-color: #008009;
+    background-color: #0071c2;
     color: white;
     width: max-content;
     padding: 3px;
@@ -50,13 +50,13 @@
 
 .siCancelOp {
     font-size: 12px;
-    color: #008009;
+    color: #0071c2;
     font-weight: bold;
 }
 
 .siCancelOpSubtitle {
     font-size: 12px;
-    color: #008009;
+    color: #0071c2;
 }
 
 .siDetails {
@@ -76,7 +76,7 @@
 }
 
 .siRating>button {
-    background-color: #003580;
+    background-color: #008009;
     color: white;
     padding: 5px;
     font-weight: bold;
@@ -100,11 +100,18 @@
 }
 
 .siCheckButton {
-    background-color: #0071c2;
-    color: white;
     font-weight: bold;
     padding: 10px 5px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    cursor: pointer;
+    color: #3faa46;
+    background-color: transparent;
+    border: 2px solid #3faa46;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.siCheckButton:hover {
+    background-color: #3faa46;
+    color:white;
 }

@@ -20,12 +20,18 @@
     right: 0;
     border: none;
     padding: 10px 20px;
-    background-color: #0071c2;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
     cursor: pointer;
+    color: #3faa46;
+    background-color: transparent;
+    border: 2px solid #3faa46;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+.bookNow:hover {
+    background-color: #3faa46;
+    color: white;
+}
+
 
 .hotelTitle {
     font-size: 24px;
@@ -39,12 +45,12 @@
 }
 
 .hotelDistance {
-    color: #0071c2;
+    color:rgb(96, 230, 55);
     font-weight: 500;
 }
 
 .hotelPriceHighlight {
-    color: #008009;
+    color: rgb(20, 25, 18);
     font-weight: 500;
 }
 
@@ -104,14 +110,18 @@
 
 .hotelDetailsPrice>button {
     border: none;
-    padding: 10px 20px;
-    background-color: #0071c2;
-    color: white;
-    font-weight: bold;
+    padding: 8px 15px;
     cursor: pointer;
-    border-radius: 5px;
+    color: #3faa46;
+    background-color: transparent;
+    border: 2px solid #3faa46;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-
+.hotelDetailsPrice>button:hover {
+    background-color: #3faa46;
+    color: white;
+}
 .slider {
     position: sticky;
     top: 0;
