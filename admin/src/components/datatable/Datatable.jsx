@@ -28,7 +28,26 @@ const Datatable = ({ columns }) => {
       console.error(err);
     }
   };
-
+  // const handleUpdate = async (id, updatedData) => {
+  //   try {
+      
+  //     const response = await axios.put(`/${path}/${id}`, updatedData);
+  
+      
+  //     if (response.status === 200) {
+       
+  //       setList((prevList) =>
+  //         prevList.map((item) => (item._id === id ? { ...item, ...updatedData } : item))
+  //       );
+  //     } else {
+      
+  //       console.error("Update was not successful");
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  
   const actionColumn = [
     {
       field: "action",
@@ -46,6 +65,12 @@ const Datatable = ({ columns }) => {
             >
               Delete
             </div>
+            {/* <div
+ className="updateButton"
+              onClick={() => handleUpdate(params.row._id)}
+            >
+             Update
+            </div> */}
           </div>
         );
       },

@@ -20,14 +20,14 @@
   border: none;
   padding: 10px 20px;
   background-color: green;
-  color: white;
+  color: rgb(12, 163, 17);
   font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
-  color: white
+ 
 }
 
 .lButton:disabled{
-  background-color: #0071c28c;
+  background-color: rgb(98, 161, 98);
   cursor: not-allowed;
 }

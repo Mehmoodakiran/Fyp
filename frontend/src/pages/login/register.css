@@ -1,8 +1,9 @@
-.login {
+.register {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100px;
 }
 
 .lContainer {
@@ -20,14 +21,13 @@
   border: none;
   padding: 10px 20px;
   background-color: green;
-  color: white;
+  color: green;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 5px;
-  color: white
+  border-radius: 18px;
 }
 
 .lButton:disabled{
-  background-color: #0071c28c;
+  background-color: rgb(24, 100, 24);
   cursor: not-allowed;
 }
