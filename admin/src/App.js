@@ -5,12 +5,12 @@ import User from "./pages/users";
 import Single from "./pages/single/Single";
 import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { userInputs} from "./formSource";
+import { userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/AuthContext";
-import { hotelColumns, roomColumns, userColumns,bookingsColumns } from "./datatablesource";
+import { hotelColumns, roomColumns, userColumns, bookingsColumns } from "./datatablesource";
 import NewHotel from "./pages/newHotel/NewHotel";
 import NewRoom from "./pages/newRoom/NewRoom";
 
@@ -37,8 +37,8 @@ function App() {
               index
               element={
                 <ProtectedRoute>
-              <User columns={userColumns} />
-              </ProtectedRoute>
+                  <User columns={userColumns} />
+                </ProtectedRoute>
               }
             />
             <Route path="user">
@@ -51,7 +51,7 @@ function App() {
                 }
               />
               <Route
-                path=":userId"
+                path="userId"
                 element={
                   <ProtectedRoute>
                     <Single />
@@ -88,7 +88,7 @@ function App() {
                 path="new"
                 element={
                   <ProtectedRoute>
-                    <NewHotel  />
+                    <NewHotel />
                   </ProtectedRoute>
                 }
               />
@@ -114,11 +114,12 @@ function App() {
                 path="new"
                 element={
                   <ProtectedRoute>
-                    <NewRoom  />
+                    <NewRoom />
                   </ProtectedRoute>
                 }
               />
-               <Route path="bookings">
+            </Route>
+            <Route path="bookings">
               <Route
                 index
                 element={
@@ -144,11 +145,11 @@ function App() {
                 }
               />
             </Route>
-            </Route>
           </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+       
+      </Routes>
+    </BrowserRouter>
+    </div >
   );
 }
 
