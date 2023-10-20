@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/", verifyUser, booking);
 
 // //Booking List
-router.get("/list", verifyUser, bookingList);
+router.get("/", verifyUser, bookingList);
 
 // //Search Booking By Id
 router.get("/search/:id", verifyUser, bookingSearch);

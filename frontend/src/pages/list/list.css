@@ -71,20 +71,16 @@
 
 .listSearch>button {
     padding: 10px;
-    background-color:white;
-    color: gray;
+    background-color:rgb(15, 156, 15);
+    color: white;
     border: none;
     width: 100%;
     font-weight: 500;
     cursor: pointer;
-    background-color: transparent;
+    /* background-color: transparent; */
     border: 2px solid white;
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-.listSearch>button:hover {
-    background-color: white;
-    
 }
 .listResult {
     flex: 3;
