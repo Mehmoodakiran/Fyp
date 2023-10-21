@@ -20,18 +20,12 @@
     right: 0;
     border: none;
     padding: 10px 20px;
-    cursor: pointer;
-    color: #3faa46;
-    background-color: transparent;
-    border: 2px solid #3faa46;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-.bookNow:hover {
     background-color: #3faa46;
     color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
 }
-
 
 .hotelTitle {
     font-size: 24px;
@@ -45,7 +39,7 @@
 }
 
 .hotelDistance {
-    color:rgb(96, 230, 55);
+    color:#3faa46;
     font-weight: 500;
 }
 
@@ -112,16 +106,12 @@
     border: none;
     padding: 8px 15px;
     cursor: pointer;
-    color: #3faa46;
-    background-color: transparent;
-    border: 2px solid #3faa46;
+    color: white;
+    background-color: #3faa46;
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.hotelDetailsPrice>button:hover {
-    background-color: #3faa46;
-    color: white;
-}
+
 .slider {
     position: sticky;
     top: 0;
