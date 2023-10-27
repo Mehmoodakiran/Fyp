@@ -9,6 +9,8 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { AuthContext } from "../../context/AuthContext";
+ 
+
   // 	<link rel="stylesheet" type="text/css" href="engine1/style.css" />
 	// <script type="text/javascript" src="engine1/jquery.js"></script>
   const Header = ({ type }) => {

@@ -13,6 +13,22 @@ const Reserve = ({ setOpen, hotelId }) => {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`);
   const { dates } = useContext(SearchContext);
+console.log("dATAAAAA",data)
+console.log("aelected dates",dates)
+const datesInRange = ( dateArray) => {
+  // Convert the start and end dates to Date objects
+  const startDate = new Date(dates[0]?.startDate);
+  const endDate = new Date(dates[0]?.endDate);
+
+  // Filter the array of dates to keep only those within the date range
+  const datesWithinRange = dateArray.filter(date => {
+    date = new Date(date);
+
+    return date >= startDate && date <= endDate;
+  });
+
+  return datesWithinRange;
+};
 
   const getDatesInRange = (startDate, endDate) => {
     const start = new Date(startDate);
@@ -33,11 +49,17 @@ const Reserve = ({ setOpen, hotelId }) => {
   const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
 
   const isAvailable = (roomNumber) => {
-    const isFound = roomNumber.unavailableDates.some((date) =>
-      alldates.includes(new Date(date).getTime())
-    );
-
-    return !isFound;
+   const availabileDates = datesInRange(roomNumber.unavailableDates)
+    // const isFound = roomNumber.unavailableDates.some((date) =>
+    //   alldates.includes(new Date(date).getTime())
+    // );
+    console.log("availabe datees ",availabileDates)
+if(availabileDates.length >0){
+  return true
+}else{
+  return false
+}
+    // return !isFound;{}
   };
 
   const handleSelect = (e) => {
@@ -93,8 +115,9 @@ const Reserve = ({ setOpen, hotelId }) => {
                   <input
                     type="checkbox"
                     value={roomNumber._id}
+                    defaultChecked={isAvailable(roomNumber)}
                     onChange={handleSelect}
-                    disabled={!isAvailable(roomNumber)}
+                    disabled={isAvailable(roomNumber)}
                   />
                 </div>
               ))}

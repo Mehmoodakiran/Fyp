@@ -2,7 +2,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import List from "./pages/list/List";
 import User from "./pages/users";
-import Single from "./pages/single/Single";
+
 import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { userInputs } from "./formSource";
@@ -13,7 +13,7 @@ import { AuthContext } from "./context/AuthContext";
 import { hotelColumns, roomColumns, userColumns, bookingsColumns } from "./datatablesource";
 import NewHotel from "./pages/newHotel/NewHotel";
 import NewRoom from "./pages/newRoom/NewRoom";
-
+import Single from "./pages/single/Single";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
 
@@ -51,10 +51,10 @@ function App() {
                 }
               />
               <Route
-                path="userId"
+                path=":id"
                 element={
                   <ProtectedRoute>
-                    <Single />
+                    <Single/>
                   </ProtectedRoute>
                 }
               />
@@ -103,7 +103,7 @@ function App() {
                 }
               />
               <Route
-                path=":hotelsId"
+                path=":roomsId"
                 element={
                   <ProtectedRoute>
                     <Single />

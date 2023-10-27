@@ -51,11 +51,12 @@ const Sidebar = () => {
               <span>Rooms</span>
             </li>
           </Link>
-          <Link to="/bookings" style={{ textDecoration: "none" }}></Link>
-          <li>
-            <HotelOutlined className="icon" />
-            <span>Bookings</span>
-          </li>
+          <Link to="/bookings" style={{ textDecoration: "none" }}>
+            <li>
+              <HotelOutlined className="icon" />
+              <span>Bookings</span>
+            </li>
+          </Link>
           {/* <p className="title">USEFUL</p>
           <li>
             <InsertChartIcon className="icon" />

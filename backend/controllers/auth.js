@@ -3,7 +3,7 @@ import User from "../models/user.js";
 import { createError } from "../utils/err.js";
 import jwt from "jsonwebtoken";
 export const register = async (req, res, next) => {
-console.log("bodyyyy",req.body)
+
     try {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.password, salt);

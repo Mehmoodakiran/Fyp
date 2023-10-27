@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import "./searchItem.css";
 
-const SearchItem = ({ item }) => {
+const SearchItem = ({ item,photos }) => {
+  console.log("items photo", item.photos)
   return (
     <div className="searchItem">
-      <img src={item.photos[0]} alt="" className="siImg" />
+      {photos && photos.length > 0 ? (
+        <img src={photos[0]} alt="alt text" className="siImg" />
+      ) : (
+        <p>No photos available</p> // Add a message if there are no photos
+      )}
       <div className="siDesc">
         <h1 className="siTitle">{item.name}</h1>
         <span className="siDistance">{item.distance}m from center</span>

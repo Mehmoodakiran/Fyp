@@ -11,7 +11,6 @@ const Datatable = ({ columns }) => {
   const path = location.pathname.split("/")[1];
   const [list, setList] = useState([]);
   const { data, loading, error } = useFetch(`/${path}`);
-
   useEffect(() => {
     if (data) {
       setList(data);
@@ -21,6 +20,8 @@ const Datatable = ({ columns }) => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/${path}/${id}`);
+      
+
       setList((prevList) => prevList.filter((item) => item._id !== id));
 
       setList(list.filter((item) => item._id !== id));
@@ -28,26 +29,26 @@ const Datatable = ({ columns }) => {
       console.error(err);
     }
   };
-  // const handleUpdate = async (id, updatedData) => {
-  //   try {
-      
-  //     const response = await axios.put(`/${path}/${id}`, updatedData);
-  
-      
-  //     if (response.status === 200) {
-       
-  //       setList((prevList) =>
-  //         prevList.map((item) => (item._id === id ? { ...item, ...updatedData } : item))
-  //       );
-  //     } else {
-      
-  //       console.error("Update was not successful");
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-  
+  const handleUpdate = async (id, updatedData) => {
+    try {
+
+      const response = await axios.put(`/${path}/${id}`, updatedData);
+
+
+      if (response.status === 200) {
+
+        setList((prevList) =>
+          prevList.map((item) => (item._id === id ? { ...item, ...updatedData } : item))
+        );
+      } else {
+
+        console.error("Update was not successful");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const actionColumn = [
     {
       field: "action",
@@ -56,21 +57,23 @@ const Datatable = ({ columns }) => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/${path}/${params.row._id}`} style={{ textDecoration: "none" }}>
+             
+            <Link to={`${params.row._id}`} style={{ textDecoration: "none" }}>
+            {/* <Link to={`/${userId}/${params.row._id}`} style={{ textDecoration: "none" }}> */}
               <div className="viewButton">View</div>
-            </Link>           
-             <div
- className="deleteButton"
+            </Link>
+            <div
+              className="deleteButton"
               onClick={() => handleDelete(params.row._id)}
             >
               Delete
             </div>
-            {/* <div
- className="updateButton"
+            <div
+         className="updateButton"
               onClick={() => handleUpdate(params.row._id)}
             >
              Update
-            </div> */}
+            </div>
           </div>
         );
       },
@@ -80,7 +83,7 @@ const Datatable = ({ columns }) => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-    
+
         {path}
         <Link to={`/${path}/new`} className="link">
           Add New
@@ -89,7 +92,7 @@ const Datatable = ({ columns }) => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        
+
         <DataGrid
           className="datagrid"
           rows={list}

@@ -11,7 +11,23 @@ const Navbar = () => {
           <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
           <span className="logo">TRAVILICS</span>
         </Link>
-
+    
+        <div className="navItems">
+        {/* <button className="navButton">
+              <Link to="/About"style={{textDecoration: "none"}}>
+              About Us
+              </Link>
+              </button>
+              <button className="navButton">
+              <Link to="/Destination"style={{textDecoration: "none"}}>
+              Destination
+              </Link>
+              </button>
+              <button className="navButton">
+              <Link to="/Room"style={{textDecoration: "none"}}>
+              Room
+              </Link>
+              </button> */}
               {user ? user.username : (
           <div className="navItems">
             <button className="navButton">
@@ -25,10 +41,11 @@ const Navbar = () => {
               </Link>
               </button>
           </div> 
+      
         )}
             </div>
           </div>
-       
+       </div>
     )
 }
 export default Navbar

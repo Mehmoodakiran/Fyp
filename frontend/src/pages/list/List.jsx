@@ -25,6 +25,9 @@ const List = () => {
     reFetch();
   };
 console.log("console",data)
+const hotelArray = Object.values(data); // Moved this line inside the component
+
+
   return (
     <div>
       <Navbar />
@@ -107,15 +110,16 @@ console.log("console",data)
             <button onClick={handleClick}>Search</button>
           </div>
           <div className="listResult">
-            {loading ? (
-              "loading"
-            ) : (
-              <>
-                {data.map((item) => (
-                  <SearchItem item={item} key={item._id} />
-                ))}
-              </>
-            )}
+          {loading ? (
+  "loading"
+) : (
+  <>
+    {hotelArray.map((item) => (
+      <SearchItem item={item} photos={item.photos} key={item._id} />
+    ))}
+  </>
+)}
+
           </div>
         </div>
       </div>

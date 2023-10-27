@@ -1,4 +1,5 @@
 import File from "../models/fileuploadmodels.js";
+import upload from "../utils/multer.js";
 
 // Handle file upload
 export const uploadFile = async(req, res) => {
@@ -13,8 +14,15 @@ export const uploadFile = async(req, res) => {
     });
     console.log(file);
     try {
-        await file.save();
-        res.send("File uploaded successfully.");
+        upload.single('photo')(res, req, async (error)=>{
+            if (error){
+                console.error("error uploadeing image: ",error);
+                return res.status(404).send({error:"error uploadeing image"})
+            }
+            await file.save();
+            res.send("File uploaded successfully.");
+        })
+        return req.file.path
     } catch (error) {
         res.status(500).send("An error occurred while uploading the file.");
     }

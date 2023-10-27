@@ -19,7 +19,7 @@ import uploadRoute from "./routes/fileRoutes.js";
 const app = express();
 dotenv.config();
 
-const connect = async() => {
+const connect = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_ATLAS);
         console.log("Connected to mongoDB.");
@@ -31,9 +31,9 @@ const connect = async() => {
 mongoose.connection.on("disconnected", () => {
     console.log("mongoDB disconnected!");
 });
-  
+
 //middlewares
-app.use(cors());
+app.use(cors({ origin: [ 'http://localhost:8801','http://localhost:3000','http://localhost:3001','http://localhost:3002'], credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 
@@ -49,7 +49,7 @@ app.use("/api/file", uploadRoute);
 
 
 app.use((err, req, res, next) => {
-    console.log("error",err)
+    console.log("error", err)
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "Something went wrong!";
     return res.status(errorStatus).json({

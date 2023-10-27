@@ -124,23 +124,23 @@ export const roomColumns = [
 export const bookingsColumns = [
   { field: "_id", headerName: "ID", width: 250 },
   {
-    field: "name",
-    headerName: "Name",
+    field: "hotelId",
+    headerName: "HotelId",
     width: 150,
   },
   {
-    field: "type",
-    headerName: "Type",
+    field: "roomId",
+    headerName: "RoomId",
     width: 100,
   },
   {
-    field: "title",
-    headerName: "Title",
+    field: "toDate",
+    headerName: "ToDate",
     width: 230,
   },
   {
-    field: "city",
-    headerName: "City",
+    field: "fromDate",
+    headerName: "FromDate",
     width: 100,
   },
 ];
