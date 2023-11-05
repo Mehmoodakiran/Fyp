@@ -10,6 +10,7 @@ function HotelList() {
   const [isLoading, setLoading] = useState(true);
 
   const apiUrl = 'http://localhost:8800/api/hotels/';
+
   useEffect(() => {
     getHotels();
   }, []);
@@ -27,27 +28,34 @@ function HotelList() {
   const getRowId = (row) => row._id;
 
   const columns = [
-    { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'distance', headerName: 'Owner Name', flex: 1 },
+    { field: 'name', headerName: 'Hotel Name', flex: 1 },
     { field: 'type', headerName: 'Type', flex: 1 },
     { field: 'city', headerName: 'City', flex: 1 },
     { field: 'address', headerName: 'Address', flex: 1 },
-    { field: 'distance', headerName: 'Distance', flex: 1 },
     { field: 'title', headerName: 'Title', flex: 1 },
     { field: 'desc', headerName: 'Description', flex: 1 },
     { field: 'cheapestPrice', headerName: 'Cheapest Price', flex: 1 },
     { field: 'featured', headerName: 'Featured', flex: 1 },
-    {
-      field: 'photos',
-      headerName: 'Photos',
-      flex: 1,
-      renderCell: (params) => (
-        <div className="photos-cell">
-          {params.row.photos.map((photo, index) => (
-            <img key={index} src={photo} alt={`Photo ${index}`} className="hotel-photo" />
-          ))}
-        </div>
-      ),
-    },
+    // { field: 'rooms', headerName: 'Rooms', flex: 1, renderCell: (params) => (
+    //   <ul>
+    //     {params.row.rooms.map((room, index) => (
+    //       <li key={index}>{`Room ${index + 1}: ${room.title}`}</li>
+    //     ))}
+    //   </ul>
+    // )},
+    // {
+    //   field: 'photos',
+    //   headerName: 'Photos',
+    //   flex: 1,
+    //   renderCell: (params) => (
+    //     <div className="photos-cell">
+    //       {params.row.photos.map((photo, index) => (
+    //         <img key={index} src={photo} alt={`Photo ${index}`} className="hotel-photo" />
+    //       ))}
+    //     </div>
+    //   ),
+    // },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -60,10 +68,10 @@ function HotelList() {
         </div>
       ),
     },
-  ]; 
+  ];
 
   let handleDelete = async (id) => {
-    const deleteUrl = `${apiUrl}/${id}`; 
+    const deleteUrl = `${apiUrl}/${id}`;
     try {
       const confirmDelete = window.confirm("Are you sure you want to delete the data?");
       if (confirmDelete) {
@@ -74,8 +82,6 @@ function HotelList() {
       console.error(error);
     }
   }
-  
-  
 
   return (
     <div className="hotel-list-container">

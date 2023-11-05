@@ -73,6 +73,7 @@
   font-weight: bold;
   cursor: pointer;
   border-radius: 5px;
+  border: 3px solid #febb02;
   width: 100%;
   margin-top: 20px;
 }

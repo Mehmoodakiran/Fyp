@@ -55,7 +55,7 @@ import upload from "../utils/multer.js";
 const router = express.Router();
 
 //CREATE
-router.post("/",  createHotel);
+router.post("/",upload.single('photos'), createHotel);
 
 //UPDATE
 router.put("/:id",verifyAdmin, updateHotel);

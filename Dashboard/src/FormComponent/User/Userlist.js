@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 
@@ -18,7 +16,7 @@ function Userlist() {
 
   let getUsers = async () => {
     try {
-      const users = await axios.get(apiUrl,{withCredentials:true})
+      const users = await axios.get(apiUrl)
         setUserList(users.data);
         setLoading(false);
         console.log(users.data)    
@@ -42,7 +40,7 @@ function Userlist() {
   const columns = [
     { field: 'username', headerName: 'Username', flex: 1 },
     { field: 'email', headerName: 'E-Mail', flex: 1 },
-    { field: 'phone', headerName: 'Phone-Mail', flex: 1 },
+    { field: 'phone', headerName: 'Phone Number', flex: 1 },
     { field: 'isAdmin', headerName: 'IsAdmin', flex: 1 },
     {
       field: 'actions',

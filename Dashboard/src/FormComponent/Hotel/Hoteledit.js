@@ -3,11 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useFormik } from 'formik';
 
-  // import React, { useEffect, useState } from 'react';
-  // import { useNavigate, useParams } from 'react-router-dom';
-  // import axios from 'axios';
-  // import { useFormik } from 'formik';
-  // import './HotelEdit.css'; // Import your custom CSS for styling
   
   function HotelEdit() {
     

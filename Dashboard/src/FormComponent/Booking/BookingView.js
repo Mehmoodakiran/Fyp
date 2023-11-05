@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Card, CardContent, CircularProgress, Typography } from '@material-ui/core';
+
 const BookingView = () => {
   const params = useParams();
   const [booking, setBooking] = useState({});
@@ -13,16 +14,13 @@ const BookingView = () => {
 
   const getBookingDetails = async () => {
     try {
-      console.log("Booking ID:", params.id); // Log the ID
       const response = await axios.get(`http://localhost:8800/api/bookings/${params.id}`, { withCredentials: true });
-      console.log("API Response:", response.data); 
       setBooking(response.data);
       setLoading(false);
     } catch (error) {
       console.error(error);
     }
-  }
-  
+  };
 
   return (
     <div>
@@ -32,15 +30,16 @@ const BookingView = () => {
         <Card>
           <CardContent>
             <Typography variant="h4">Booking Details</Typography>
-            <Typography variant="h5">Hotel ID: {booking.hotelId}</Typography>
-            <Typography variant="h5">Room ID: {booking.roomId}</Typography>
-            <Typography>From Date: {booking.fromDate}</Typography>
-            <Typography>To Date: {booking.toDate}</Typography>
+            <Typography variant="h5">User Name : {booking.userName || 'N/A'}</Typography>
+            <Typography variant="h5">Hotel ID: {booking.hotelId || 'N/A'}</Typography>
+            <Typography variant="h5">Room ID: {booking.roomId || 'N/A'}</Typography>
+            <Typography>From Date: {booking.fromDate || 'N/A'}</Typography>
+            <Typography>To Date: {booking.toDate || 'N/A'}</Typography>
           </CardContent>
         </Card>
       )}
     </div>
   );
-}
+};
 
 export default BookingView;

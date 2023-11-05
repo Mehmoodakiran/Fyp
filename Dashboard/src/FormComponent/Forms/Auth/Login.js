@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Container, Card, CardContent, TextField, Button, Grid, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [username, setUsername] = useState('');
+    const [phonenumber, setPhonenumber] = useState('');
     const [password, setPassword] = useState('');
     const Navigate = useNavigate();
 
@@ -14,6 +14,7 @@ function Login() {
         const apiUrl = 'http://localhost:8800/api/auth/login/';
         const user = {
             username: username,
+            phonenumber: phonenumber,
             password: password,
         };
         try {
@@ -26,8 +27,9 @@ function Login() {
         } catch (error) {
             console.error(error);
         }
-    };   
-  return (
+    };
+
+    return (
         <Container
             sx={{
                 display: 'flex',
@@ -37,9 +39,9 @@ function Login() {
             }}
         >
             <Card sx={{ minWidth: 275 }}>
-                <CardContent >
+                <CardContent>
                     <Container maxWidth='sm'>
-                        <Grid container spacing={3} >
+                        <Grid container spacing={3}>
                             <Grid item xs={12}>
                                 <Typography variant="h4" align="center">
                                     LOGIN
@@ -54,6 +56,18 @@ function Login() {
                                     id="exampleInputEmail"
                                     sx={{ borderRadius: '25px', mt: 5 }}
                                     onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    variant="outlined"
+                                    type="phonenumber"
+                                    label="Phone Number"
+                                    id="exampleInputnumber"
+                                    sx={{ borderRadius: '25px' }}
+                                    onChange={(e) => setPhonenumber(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12}>

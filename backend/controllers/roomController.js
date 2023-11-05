@@ -47,6 +47,7 @@ export const updateRoom = async (req, res, next) => {
     }
 };
 export const updateRoomAvailability = async (req, res, next) => {
+    console.log("api calling")
     try {
         await Room.updateOne({ "roomNumbers._id": req.params.id }, {
             $push: {
@@ -61,15 +62,16 @@ export const updateRoomAvailability = async (req, res, next) => {
 export const deleteRoom = async (req, res, next) => {
     const hotelId = req.params.hotelid;
     try {
-        await Room.findByIdAndDelete(req.params.id);
+        // await Room.findByIdAndDelete(req.params.id);
 
         try {
-            await Hotel.updateMany(
-                {
-                    $pull: { rooms: req.params.id },
-                },
-                { multi: true }
-            );
+        //   await  removeRoomFromAllHotels(req.params.id)
+            // await Hotel.updateMany(
+            //     {
+            //         $pull: { rooms: req.params.id },
+            //     },
+            //     { multi: true }
+            // );
             // await Hotel.findByIdAndUpdate(hotelId, {
             //     $pull: { rooms: req.params.id },
 
@@ -91,6 +93,32 @@ export const getRoom = async (req, res, next) => {
         next(err);
     }
 };
+
+async function removeRoomFromAllHotels(roomId) {
+    try {
+      // Find all hotels that contain the room to be removed
+      const hotelsToUpdate = await Hotel.find({ rooms: roomId });
+  console.log("hotelsss updatee",hotelsToUpdate)
+      // Use a loop or Promise.all to update each hotel document
+      await Promise.all(
+        hotelsToUpdate.map(async (hotel) => {
+          // Remove the room ID from the hotel's rooms array
+          hotel.rooms = hotel.rooms.filter((room) => room !== roomId);
+          await hotel.save();
+        })
+      );
+  
+      // Now, you can delete the room document if it's no longer associated with any hotel
+      const room = await Room.findById(roomId);
+      if (room && hotelsToUpdate.length === 0) {
+        await Room.findByIdAndDelete(roomId);
+      }
+  
+      console.log('Room removed from all hotels');
+    } catch (error) {
+      console.error('Error removing room from all hotels:', error);
+    }
+  }
 export const getRooms = async (req, res, next) => {
     try {
         const rooms = await Room.find();

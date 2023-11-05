@@ -1,32 +1,28 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function UserView() {
   const params = useParams();
-  console.log("User View", params);
   const [user, setUser] = useState({});
   const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // On Load
-    getUsers();
-  }, );
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8800/api/user/${params.id}`);
+        setUser(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setError('Failed to fetch user data');
+        setLoading(false);
+      }
+    };
 
-  const getUsers = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8800/api/user/${params.id}`, {
-        withCredentials: true,
-      });
-
-      console.log("User Data:", response.data);
-
-      setUser(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    fetchUserData();
+  }, [params.id]); // Fetch data whenever `params.id` changes
 
   return (
     <>
@@ -38,37 +34,27 @@ function UserView() {
         <div className="card-body">
           {isLoading ? (
             <img src="https://media.giphy.com/media/ZO9b1ntYVJmjZlsWlm/giphy.gif" alt="Loading" />
+          ) : error ? (
+            <div>Error: {error}</div>
           ) : (
             <div className="table-responsive">
               <table className="table table-bordered" id="dataTable" width="100%" cellSpacing="0">
-                <thead>
-                  <tr>
-                    {/* <th>Id</th> */}
-                    <th>Username</th>
-                    <th>E-Mail</th>
-                    <th>Phone</th>
-                    {/* <th>State</th>
-                    <th>Country</th> */}
-                  </tr>
-                </thead>
-                {/* <tfoot>
-                  <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>E-mail</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Country</th>
-                  </tr>
-                </tfoot> */}
                 <tbody>
                   <tr>
-                    {/* <td>{user.id}</td> */}
+                    <th>Username</th>
                     <td>{user.username}</td>
+                  </tr>
+                  <tr>
+                    <th>Phone Number</th>
                     <td>{user.phone}</td>
-                    {/* <td>{user.city}</td> */}
-                    {/* <td>{user.state}</td>
-                    <td>{user.country}</td> */}
+                  </tr>
+                  <tr>
+                    <th>E-Mail</th>
+                    <td>{user.email}</td>
+                  </tr>
+                  <tr>
+                    <th>IsAdmin</th>
+                    <td>{user.isAdmin ? "Yes" : "No"}</td>
                   </tr>
                 </tbody>
               </table>

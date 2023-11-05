@@ -67,7 +67,8 @@ function RoomEdit() {
 
   return (
     <Container>
-      <Typography variant="h5">Edit Room - ID: {params.id}</Typography>
+      {/* <Typography variant="h5">Edit Room - ID: {params.id}</Typography> */}
+      <Typography variant="h5">Edit Room  </Typography>
       <form onSubmit={myFormik.handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

@@ -1,18 +1,24 @@
+// RoomList.jsx
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBed } from '@fortawesome/free-solid-svg-icons';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import "./roomList.css"
+
 function RoomList() {
-  const [RoomList, setRoomList] = useState([]);
+  const [roomList, setRoomList] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  const apiUrl = 'http://localhost:8800/api/rooms';
+  const apiUrl = 'http://localhost:8800/api/rooms/';
+
   useEffect(() => {
     getRooms();
   }, []);
-
-  let getRooms = async () => {
+ 
+  
+  const getRooms = async () => {
     try {
       const rooms = await axios.get(apiUrl, { withCredentials: true });
       setRoomList(rooms.data);
@@ -23,25 +29,12 @@ function RoomList() {
   }
 
   const getRowId = (row) => row._id;
-// eslint-disable-next-line
+
   const columns = [
     { field: 'title', headerName: 'Title', flex: 1 },
     { field: 'price', headerName: 'Price', flex: 1 },
-    { field: 'maxPeople', headerName: 'MaxPeople', flex: 1 },
-    { field: 'desc', headerName: 'Desc', flex: 1 },
-    {
-      field: 'roomNumbers',
-      headerName: 'RoomNumbers',
-      flex: 1,
-      renderCell: (params) => (
-        <div>
-          {params.row.roomNumbers.map((roomNumber) => (
-            <div key={roomNumber.number}>
-              Number: {roomNumber.number}, Unavailable Dates: {roomNumber.unavailableDates.join(', ')}
-            </div>
-          ))}
-        </div>
-      )},
+    { field: 'maxPeople', headerName: 'Max People', flex: 1 },
+    { field: 'desc', headerName: 'Description', flex: 1 },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -49,19 +42,17 @@ function RoomList() {
       renderCell: (params) => (
         <div className="action-buttons">
           <Link to={`/portal/room-view/${params.row._id}`} className='btn btn-primary btn-sm'>View</Link>
-          <Link to={`/portal/room-edit/${params.row._id}`} className='btn btn-info btn-sm'>Edit</Link>
+          <Link to={`/portal/rooms-edit/${params.row._id}`} className='btn btn-info btn-sm'>Edit</Link>
           <button onClick={() => handleDelete(params.row._id)} className='btn btn-danger btn-sm'>Delete</button>
         </div>
-      )},
-    ,
+      ),
+    },
   ];
-  
-  let handleDelete = async (id) => {
-    const deleteUrl = `${apiUrl}/${id}`;
+  const handleDelete = async (id) => {
     try {
-      const confirmDelete = window.confirm("Are you sure you want to delete the data?");
+      const confirmDelete = window.confirm("Are you sure you want to delete the booking?");
       if (confirmDelete) {
-        await axios.delete(deleteUrl);
+        await axios.delete(`http://localhost:8800/api/rooms/${id}`, { withCredentials: true });
         getRooms();
       }
     } catch (error) {
@@ -69,18 +60,19 @@ function RoomList() {
     }
   }
   
+
   return (
     <div className="room-list-container">
-      <div className="header">
-        <h3 className="h3 mb-0 text-gray-800">Rooms</h3>
+      <div className="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 className="h3 mb-0 text-gray-800">Room</h3>
         <Link to="/portal/create-room" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-
+          <FontAwesomeIcon icon={faBed} className="creatingroom mr-2" />
           Create Room
         </Link>
       </div>
       <div className="data-grid">
         <DataGrid
-          rows={RoomList}
+          rows={roomList}
           columns={columns}
           pageSize={5}
           loading={isLoading}

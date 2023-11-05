@@ -17,6 +17,7 @@ import RoomEdit from './FormComponent/Rooms/Roomedit';
 import UserView from './FormComponent/User/UserView';
 import Userlist from './FormComponent/User/Userlist';
 import HotelCreate from './FormComponent/Hotel/HotelCreate ';
+import BookingCreate from './FormComponent/Booking/BookingCreate';
 import "./sb-admin-2.min.css";
 import { Route, Routes } from 'react-router-dom';
 
@@ -38,12 +39,14 @@ function App() {
         <Route path='user-list' element={<Userlist />} />
         <Route path='user-view/:id' element={<UserView />} />
         <Route path='user-edit/:id' element={<UserEdit />} />
-        <Route path='booking-list' element={<BookingList />} />
-        <Route path='portal/booking-view/:id' element={<BookingView />} />
+        <Route path='bookings-list' element={<BookingList />} />
+        <Route path='booking-view/:id' element={<BookingView />} /> 
+        <Route path='create-booking' element={<BookingCreate />} />
+        {/* <Route path='booking-edit/:id' element={<BookingEdit />} /> */}
         <Route path='rooms-list' element={<RoomList />} />
         {/* <Route path='/room-view/:id' element={<RoomView />} /> */}
         <Route path='room-view/:id' element={<RoomView />} />
-        <Route path='room-edit/:id' element={<RoomEdit />} />
+        <Route path='rooms-edit/:id' element={<RoomEdit />} />
 
       </Route>
     </Routes>

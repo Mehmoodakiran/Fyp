@@ -8,10 +8,10 @@ import {
   import List from "./pages/list/List";
   import Login from "./pages/login/Login";
   import Register from "./pages/login/Register";
-  // import Room from "./pages/Room/Room";
-  // import About from "./pages/about/About";
-  // import Destinations from "./pages/destination/Destinations"
-  // import Contact from "./pages/contact/Contact"
+  import About from "./pages/about/About";
+  import Destinations from "./pages/destination/Destinations";
+  import Contact from "./pages/contact/Contact"
+  import HotelRegister from "./pages/Register/HotelRegister"
 
   function App() {
     return (
@@ -22,10 +22,10 @@ import {
           <Route path="/hotels/:id" element={<Hotel/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
-          {/* <Route path="/about"element={<About/>}/> */}
-          {/* <Route path="/room"element={<Room/>}/> */}
-          {/* <Route path="/destination"element={<Destinations/>}/>
-          <Route path="/contact"element={<Contact/>}/> */}
+          <Route path="/about"element={<About/>}/>
+          <Route path="/hotelRegister"element={<HotelRegister/>}/>
+           <Route path="/destinations"element={<Destinations/>}/>
+          <Route path="/contact"element={<Contact/>}/> 
         </Routes>
       </BrowserRouter>
     );

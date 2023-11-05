@@ -106,23 +106,18 @@ const Hotel = () => {
               <span>{data.address}</span>
             </div>
             <span className="hotelDistance">
-              Excellent location – {data.distance}m from center
+              Registered Hotel  – {data.distance} in Skardu
             </span>
             <span className="hotelPriceHighlight">
-              Book a stay over ${data.cheapestPrice} at this property and get a
+              Book a stay over Price{data.cheapestPrice} at this property and get a
               free airport taxi
             </span>
             <div className="hotelImages">
-              {data.photos?.map((photo, i) => (
-                <div className="hotelImgWrapper" key={i}>
-                  <img
-                    onClick={() => handleOpen(i)}
-                    src={photo}
-                    alt=""
-                    className="hotelImg"
-                  />
-                </div>
-              ))}
+            {data.photos?.map((photo, i) => (
+  <div className="hotelImgWrapper" key={i}>
+    <img src={"http://localhost:8800" + photo.replace('public', '')} alt="img icon" className="siImg" />
+  </div>
+))}
             </div>
             <div className="hotelDetails">
               <div className="hotelDetailsTexts">
@@ -136,7 +131,7 @@ const Hotel = () => {
              excellent location score of 9.8!
                 </span>
                 <h2>
-                  <b>${days * data.cheapestPrice * options.room}</b> ({days}{" "}
+                  <b>Price{days * data.cheapestPrice * options.room}</b> ({days}{" "}
                   nights)
                 </h2>
                 <button onClick={handleClick}>Reserve or Book Now!</button>
@@ -147,7 +142,7 @@ const Hotel = () => {
           <Footer />
         </div>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/>}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} hotelName={data?.name}/>}
     </div>
   );
 };

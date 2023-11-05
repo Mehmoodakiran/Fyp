@@ -18,6 +18,7 @@
     position: absolute;
     top: 10px;
     right: 0;
+    border: 3px solid #febb02;
     border: none;
     padding: 10px 20px;
     background-color: #3faa46;
@@ -107,6 +108,7 @@
     padding: 8px 15px;
     cursor: pointer;
     color: white;
+    border: 3px solid #febb02;
     background-color: #3faa46;
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;

@@ -12,7 +12,7 @@ function Sidebar() {
     return (
         <ul className="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style={sidebarStyle}>
             <li className="nav-item">
-                <Link className="nav-link" to="/portal/dashboard">
+                <Link className="nav-link" to="/">
                     <FontAwesomeIcon icon={faTachographDigital} style={{ marginRight: "0.5rem" }} />
                     <span style={{ fontSize: "16px" }}>Travelics</span> {/* Change "Dashboard" to "Travelics" */}
                 </Link>
@@ -38,7 +38,7 @@ function Sidebar() {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to="/portal/booking-list">
+                <Link className="nav-link" to="/portal/bookings-list">
                     <FontAwesomeIcon icon={faBook} style={{ marginRight: "0.5rem" }} />
                     <span style={{ fontSize: "16px" }}>Booking</span>
                 </Link>

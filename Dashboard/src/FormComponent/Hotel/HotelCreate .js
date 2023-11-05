@@ -1,11 +1,11 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const CreateHotel = () => {
@@ -22,6 +22,7 @@ const CreateHotel = () => {
         cheapestPrice: 0,
         featured: false,
     });
+    const [successMessage, setSuccessMessage] = useState(''); // Define successMessage state variable
 
     const addRoom = () => {
         setFormData({
@@ -46,7 +47,8 @@ const CreateHotel = () => {
                 cheapestPrice: formData.cheapestPrice,
                 featured: formData.featured,
                 photos: formData.photos,
-                rooms: formData.rooms, // Include rooms in the hotel object
+                rooms: formData.rooms,
+             // Include rooms in the hotel object
             };
 
             const response = await axios.post(apiUrl, hotel, {
@@ -56,11 +58,13 @@ const CreateHotel = () => {
                 },
             });
 
+            setSuccessMessage('Your hotel is registered!');
             console.log(response.data);
         } catch (error) {
             console.error("Error:", error);
         }
     };
+
 
     const handleChange = (e) => {
         const { name, value, type, checked, files } = e.target;
@@ -90,15 +94,30 @@ const CreateHotel = () => {
         }
     };
     return (
+      
         <Container>
+    
             <Box component="form" onSubmit={handleSubmit}>
-                <TextField
+            <TextField
                     fullWidth
-                    label="Name"
+                    label="Owner Name"
+                    name="distance"
+                    value={formData.distance}
+                    onChange={handleChange}
+                    margin="normal"
+                    placeholder="Please Enter Owner Name"
+                    required
+                    
+                />
+            <TextField
+                    fullWidth
+                    label="Hotel Name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     margin="normal"
+                    placeholder="Enter Hotel Name"
+                    required
                 />
                 <TextField
                     fullWidth
@@ -107,6 +126,8 @@ const CreateHotel = () => {
                     value={formData.type}
                     onChange={handleChange}
                     margin="normal"
+                    placeholder="Enter Hotel Type"
+                    required
                 />
                 <TextField
                     fullWidth
@@ -115,6 +136,8 @@ const CreateHotel = () => {
                     value={formData.city}
                     onChange={handleChange}
                     margin="normal"
+                    placeholder="Please Enter Your City"
+                    required
                 />
                 <TextField
                     fullWidth
@@ -123,15 +146,10 @@ const CreateHotel = () => {
                     value={formData.address}
                     onChange={handleChange}
                     margin="normal"
+                    placeholder="Please Enter Your Address"
+                    required
                 />
-                <TextField
-                    fullWidth
-                    label="Distance"
-                    name="distance"
-                    value={formData.distance}
-                    onChange={handleChange}
-                    margin="normal"
-                />
+              
                 <TextField
                     fullWidth
                     label="Title"
@@ -139,6 +157,8 @@ const CreateHotel = () => {
                     value={formData.title}
                     onChange={handleChange}
                     margin="normal"
+                    placeholder="Enter Hotel Title"
+                    required
                 />
                 <TextField
                     fullWidth
@@ -147,6 +167,8 @@ const CreateHotel = () => {
                     value={formData.desc}
                     onChange={handleChange}
                     margin="normal"
+                    placeholder="Please Enter Your Desc"
+                    required
                 />
                 <TextField
                     fullWidth
@@ -189,24 +211,28 @@ const CreateHotel = () => {
                     </div>
                 ))}
 
-                <input
-                    type="file"
-                    accept="image/*"
-                    name="photos"
-                    multiple
-                    onChange={handleChange}
-                />
-                <Box mt={2} mb={2}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        onClick={handleSubmit}
-                    >
-                        Submit
-                    </Button>
-                </Box>
-            </Box>
+
+                   <input
+                   type="file"
+                   accept="image/*"
+                   name="photos"
+                   multiple
+                   onChange={handleChange}
+                   style={{ display: 'none' }}
+                   id="select-image"
+               />
+               <label htmlFor="select-image">
+                   <Button component="span" variant="outlined" style={{ color: '#3faa46' }}>
+                       Select Your Hotel Pictures
+                   </Button>
+               </label>
+               <Button type="submit" variant="contained" style={{ backgroundColor: '#3faa46', color: 'white' }}>
+                    Submit
+                </Button>
+
+               {successMessage && <p>{successMessage}</p>}
+           </Box>
+
             <Button
                 variant="contained"
                 color="primary"

@@ -18,13 +18,13 @@ const List = () => {
   const [max, setMax] = useState(undefined);
 
   const { data, loading, error, reFetch } = useFetch(
-    `/hotels?city=${destination}&min=${min || 0 }&max=${max || 10000}`
+    `/hotels/?city=${destination}&min=${min || 0 }&max=${max || 10000}`
   );
 
   const handleClick = () => {
     reFetch();
   };
-console.log("console",data)
+
 const hotelArray = Object.values(data); // Moved this line inside the component
 
 

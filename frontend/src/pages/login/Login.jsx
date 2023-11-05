@@ -118,7 +118,7 @@ const Login = () => {
             className="login-button"
             disabled={loading}
           >
-            {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+            {loading ? <CircularProgress size={24} color="#3faa46'" /> : "Login"}
           </Button>
           {error && (
             <Typography variant="body2" color="error" align="center">

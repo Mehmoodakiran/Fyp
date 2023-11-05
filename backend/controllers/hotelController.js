@@ -2,17 +2,21 @@ import Hotel from "../models/hotelmodels.js";
 import Room from "../models/roomsmodels.js";
 import upload from "../utils/multer.js";
 
+
 export const createHotel = async (req, res, next) => {
   try {
-    upload.single('photos')(req, res, async function(error){
-      if (error) {
-        console.error("error uploadeing image: ", error);
-        return res.status(404).send({ error: "error uploadeing image" })
-      }
-      // res.send("File uploaded successfully.");
-    })
-    console.log("API Called");
+    // upload.single('photos')(req, res, async function(error){
+    //   if (error) {
+    //     console.error("error uploadeing image: ", error);
+    //     return res.status(404).send({ error: "error uploadeing image" })
+    //   }
+    //   // const photo = req.file.path;
+    //   console.log("photo", req,res)
+    //   // res.send("File uploaded successfully.");
+    // })
+ 
     try {
+      
       const photo = req.file.path;
       console.log(photo)
 
@@ -30,8 +34,8 @@ export const createHotel = async (req, res, next) => {
         featured,
       } = req.body;
 
-      console.log("Request Body : ", req.body);
-      console.log("Request File : ", photo);
+      // console.log("Request Body : ", req.body);
+      // console.log("Request File : ", photo);
 
       const newHotel = new Hotel({
         name,
@@ -39,7 +43,7 @@ export const createHotel = async (req, res, next) => {
         city,
         address,
         distance,
-        photos: [photo],
+        photos: [ photo],
         title,
         desc,
         rating,
@@ -201,40 +205,30 @@ export const createHotel = async (req, res, next) => {
       next(err);
     }
   };
-  // export const getHotels = async (req, res, next) => {
-  //   const { min, max, ...others } = req.query;
-  //   try {
-  //     const hotels = await Hotel.find({
-  //       ...others,
-  //       cheapestPrice: { $gt: min | 1, $lt: max || 999 },
-  //     }).limit(req.query.limit);
-  //     res.status(200).json(hotels);
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // };
-  export const getHotels = async (req, res, next) => {
-    
-    const { min, max,limit} = req.query;
-    const filter ={}
-    // console.log("log",min,max,limit)
-    try {
-      if(min || max || limit){
-        const hotels = await Hotel.find({
-          cheapestPrice: { $gt: min | 1, $lt: max || 999 },
-        }).limit(req.query.limit);
-        res.status(200).json(hotels);
-       
-      }else{
-        const hotels = await Hotel.find()
-        res.status(200).json(hotels);
-      }
-     
-    
-    } catch (err) {
-      next(err);
+ 
+
+export const getHotels = async (req, res, next) => {
+
+  const { min, max, limit } = req.query;
+  const filter = {}
+  // console.log("log",min,max,limit)
+  try {
+    if (min || max || limit) {
+      const hotels = await Hotel.find({
+        cheapestPrice: { $gt: min | 1, $lt: max || 10000 },
+      }).limit(req.query.limit);
+      res.status(200).json(hotels);
+
+    } else {
+      const hotels = await Hotel.find()
+      res.status(200).json(hotels);
     }
-  };
+
+
+  } catch (err) {
+    next(err);
+  }
+};
 
 
   export const countByCity = async (req, res, next) => {
@@ -250,25 +244,25 @@ export const createHotel = async (req, res, next) => {
       next(err);
     }
   };
-   export const countByType = async (req, res, next) => {
-    try {
-      const hotelCount = await Hotel.countDocuments({ type: "hotel" });
-      const apartmentCount = await Hotel.countDocuments({ type: "apartment" });
-      const resortCount = await Hotel.countDocuments({ type: "resort" });
-      const villaCount = await Hotel.countDocuments({ type: "villa" });
-      const cabinCount = await Hotel.countDocuments({ type: "lexury" });
-  
-      res.status(200).json([
-        { type: "hotel", count: hotelCount },
-        { type: "apartments", count: apartmentCount },
-        { type: "resorts", count: resortCount },
-        { type: "villas", count: villaCount },
-        { type: "cabins", count: cabinCount },
-      ]);
-    } catch (err) {
-      next(err);
-    }
-  };
+  export const countByType = async (req, res, next) => {
+      try {
+        const hotelCount = await Hotel.countDocuments({ type: "hotel" });
+        const apartmentCount = await Hotel.countDocuments({ type: "apartments" });
+        const resortCount = await Hotel.countDocuments({ type: "resorts" });
+        const guestCount = await Hotel.countDocuments({ type: "guests" });
+        const cabinCount = await Hotel.countDocuments({ type: "cabins" });
+    
+        res.status(200).json([
+          { type: "hotels", count: hotelCount },
+          { type: "apartments", count: apartmentCount },
+          { type: "resorts", count: resortCount },
+          { type: "guests", count: guestCount },
+          { type: "cabins", count: cabinCount },
+        ]);
+      } catch (err) {
+        next(err);
+      }
+    };
   
   export const getHotelRooms = async (req, res, next) => {
     try {

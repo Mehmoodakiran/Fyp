@@ -1,10 +1,12 @@
 import "./featured.css";
-import IMG from "../../Images/img2.jpg";
-import img from "../../Images/img3.jpg";
+import img from "../../Images/himlya askd.jpg";
+import img1 from "../../Images/shiger.jpg";
+import img2 from "../../Images/regoo.jpg";
 import useFetch from "../../hooks/useFetch.js";
 const Featured = () => {
   // const { data, loading, error } = useFetch("/hotels/countByCity?cities=Skardu,Khapulu,Astanaa");
-  const { data, loading, error } = useFetch("/hotels/countByCity?cities=Skardu,Khapulu,Astanaa");
+  const { data, loading,
+     error } = useFetch("/hotels/countByCity?cities=Skardu,Khapulu,Astanaa");
 
   console.log(data)
 
@@ -16,12 +18,12 @@ return (
       <>
         <div className="featuredItem">
         <img
-        src={IMG}
+        src={img1}
         alt="Image"
         className="featuredImg"/>
           <div className="featuredTitles">
             <h1>Skardu</h1>
-            <h2>{data[0]} properties</h2>
+            <h2>{data[0]} Hotels</h2>
           </div>
         </div>
 
@@ -32,17 +34,17 @@ return (
         className="featuredImg"/>
           <div className="featuredTitles">
             <h1>Khapulu</h1>
-            <h2>{data[1]} properties</h2>
+            <h2>{data[1]} Hotels</h2>
           </div>
         </div>
         <div className="featuredItem">
         <img
-        src={IMG}
+        src={img2}
         alt="Image"
         className="featuredImg"/>
           <div className="featuredTitles">
-            <h1>Astanaa</h1>
-            <h2>{data[2]} properties</h2>
+            <h1>Shiger</h1>
+            <h2>{data[2]} Hotels</h2>
           </div>
         </div>
       </>

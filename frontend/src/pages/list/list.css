@@ -13,12 +13,13 @@
 
 .listSearch {
     flex: 1;
-    background-color:#0071c2;
+    background-color:rgb(49, 200, 90);
     padding: 10px;
     border-radius: 10px;
     position: sticky;
     top: 10px;
     height: max-content;
+    border: 3px solid #febb02;
 }
 
 .lsTitle {
@@ -71,14 +72,13 @@
 
 .listSearch>button {
     padding: 10px;
-    background-color:rgb(15, 156, 15);
-    color: white;
+    background-color:white;
+    color: black;
     border: none;
     width: 100%;
     font-weight: 500;
     cursor: pointer;
-    /* background-color: transparent; */
-    border: 2px solid white;
+    border: 3px solid #febb02;
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }

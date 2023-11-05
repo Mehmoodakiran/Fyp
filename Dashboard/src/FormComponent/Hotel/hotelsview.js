@@ -40,33 +40,6 @@ const useStyles = makeStyles({
   },
 });
 
-
-
-// const useStyles = makeStyles((theme) => ({
-//   hotelViewContainer: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//   },
-//   hotelViewContent: {
-//     width: '80%',
-//   },
-//   title: {
-//     textAlign: 'center',
-//     marginBottom: theme.spacing(2),
-//   },
-//   hotelName: {
-//     marginBottom: theme.spacing(2),
-//   },
-//   details: {
-//     marginBottom: theme.spacing(1),
-//   },
-//   loadingSpinner: {
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-// }));
-
 function HotelView() {
   const classes = useStyles();
   const params = useParams();

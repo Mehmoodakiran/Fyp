@@ -9,6 +9,8 @@ import hotelsRoute from "./routes/hotelRoutes.js";
 import roomsRoute from "./routes/roomsRoutes.js";
 import bookingsRoute from "./routes/bookingsRoutes.js";
 import uploadRoute from "./routes/fileRoutes.js";
+import path ,{ dirname }from "path";
+import { fileURLToPath } from 'url';
 
 
 
@@ -36,7 +38,10 @@ mongoose.connection.on("disconnected", () => {
 app.use(cors({ origin: [ 'http://localhost:8801','http://localhost:3000','http://localhost:3001','http://localhost:3002'], credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
-
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'upload')));
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/hotels", hotelsRoute);
