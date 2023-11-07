@@ -60,7 +60,9 @@
     background-color: #3faa46;
     color: white;
 }
-
+.Logo{
+    width: 5px;
+}
 /* Media query for screens with a maximum width of 768px */
 @media (max-width: 768px) {
     .navContainer {

@@ -6,15 +6,13 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [username, setUsername] = useState('');
-    const [phonenumber, setPhonenumber] = useState('');
     const [password, setPassword] = useState('');
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleLogin = async () => {
         const apiUrl = 'http://localhost:8800/api/auth/login/';
         const user = {
             username: username,
-            phonenumber: phonenumber,
             password: password,
         };
         try {
@@ -23,7 +21,7 @@ function Login() {
             });
     
             alert("User login successful");
-            Navigate('/portal/dashboard');
+            navigate('/portal/dashboard');
         } catch (error) {
             console.error(error);
         }
@@ -63,17 +61,6 @@ function Login() {
                                 <TextField
                                     fullWidth
                                     variant="outlined"
-                                    type="phonenumber"
-                                    label="Phone Number"
-                                    id="exampleInputnumber"
-                                    sx={{ borderRadius: '25px' }}
-                                    onChange={(e) => setPhonenumber(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    variant="outlined"
                                     type="password"
                                     label="Password"
                                     id="exampleInputPassword"
@@ -86,7 +73,7 @@ function Login() {
                                     fullWidth
                                     variant="contained"
                                     color="primary"
-                                    sx={{ borderRadius: '25px', ml: 10, mr: 5, mt: 5 }}
+                                    sx={{ borderRadius: '25px', ml: 10, mr: 5, mt: 5, backgroundColor: 'rgb(49, 200, 90)' }}
                                     onClick={handleLogin}
                                 >
                                     Login

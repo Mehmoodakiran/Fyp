@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
@@ -23,6 +22,7 @@ const CreateHotel = () => {
         featured: false,
     });
     const [successMessage, setSuccessMessage] = useState(''); // Define successMessage state variable
+    const [error, setError] = useState('');
 
     const addRoom = () => {
         setFormData({
@@ -35,7 +35,7 @@ const CreateHotel = () => {
         e.preventDefault();
         try {
             const apiUrl = 'http://localhost:8800/api/hotels/';
-
+    
             const hotel = {
                 name: formData.name,
                 type: formData.type,
@@ -48,22 +48,37 @@ const CreateHotel = () => {
                 featured: formData.featured,
                 photos: formData.photos,
                 rooms: formData.rooms,
-             // Include rooms in the hotel object
             };
-
+            if (!formData.name || !formData.distance ) {
+                setError('Name, distance, and address fields are required.');
+                return;
+            }
+    
+            const existingHotels = await axios.get(apiUrl);
+            const exists = existingHotels.data.some(hotel => 
+                hotel.name === formData.name && hotel.distance === formData.distance
+            );
+    
+            if (exists) {
+                setError('Hotel Name and Owner Name already exist.');
+                return;
+            }
+    
             const response = await axios.post(apiUrl, hotel, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
+    
             setSuccessMessage('Your hotel is registered!');
+            setError(''); // Clear the error when the submission is successful
             console.log(response.data);
         } catch (error) {
             console.error("Error:", error);
         }
     };
+    
 
 
     const handleChange = (e) => {
@@ -96,7 +111,7 @@ const CreateHotel = () => {
     return (
       
         <Container>
-    
+        
             <Box component="form" onSubmit={handleSubmit}>
             <TextField
                     fullWidth
@@ -126,7 +141,7 @@ const CreateHotel = () => {
                     value={formData.type}
                     onChange={handleChange}
                     margin="normal"
-                    placeholder="Enter Hotel Type"
+                    placeholder="hotels/cabins/guests/apartments/resorts"
                     required
                 />
                 <TextField
@@ -229,25 +244,12 @@ const CreateHotel = () => {
                <Button type="submit" variant="contained" style={{ backgroundColor: '#3faa46', color: 'white' }}>
                     Submit
                 </Button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
 
                {successMessage && <p>{successMessage}</p>}
            </Box>
-
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={addRoom}
-            >
-                Add Room
-            </Button>
-
-            <Link to="/portal/hotel-list">
-                <Button variant="contained" color="primary" style={{ marginLeft: '10px' }}>
-                    View Hotel List
-                </Button>
-            </Link>
-        </Container>
-    );
+       </Container>
+   );
 };
 
 export default CreateHotel;

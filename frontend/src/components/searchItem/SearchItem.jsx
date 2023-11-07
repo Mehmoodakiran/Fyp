@@ -12,7 +12,7 @@ const SearchItem = ({ item,photos }) => {
       )}
       <div className="siDesc">
         <h1 className="siTitle">{item.name}</h1>
-        <span className="siDistance">{item.distance} Skardu Hotel</span>
+        <span className="siDistance">{item.distance} Hotel Manager</span>
         <span className="siTaxiOp">Free airport taxi</span>
         <span className="siSubtitle">
           Studio Apartment with Air conditioning

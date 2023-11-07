@@ -29,7 +29,9 @@
 .siDistance {
     font-size: 12px;
 }
-
+.success-message {
+    color: red;
+    font-weight: bold;}
 .siTaxiOp {
     font-size: 12px;
     background-color: #0071c2;

@@ -50,15 +50,16 @@ function RoomList() {
   ];
   const handleDelete = async (id) => {
     try {
-      const confirmDelete = window.confirm("Are you sure you want to delete the booking?");
+      const confirmDelete = window.confirm("Are you sure you want to delete the room?");
       if (confirmDelete) {
         await axios.delete(`http://localhost:8800/api/rooms/${id}`, { withCredentials: true });
-        getRooms();
+        getRooms(); // Refresh room list after successful deletion
       }
     } catch (error) {
       console.error(error);
     }
   }
+  
   
 
   return (

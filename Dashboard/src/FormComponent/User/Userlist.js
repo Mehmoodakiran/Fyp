@@ -14,17 +14,18 @@ function Userlist() {
     console.log("welcome to user list");
   }, []);
 
-  let getUsers = async () => {
+  const getUsers = async () => {
     try {
-      const users = await axios.get(apiUrl)
-        setUserList(users.data);
-        setLoading(false);
-        console.log(users.data)    
+      const users = await axios.get(apiUrl);
+      setUserList(users.data);
+      setLoading(false);
+      console.log(users.data);   
     } catch (error) {
       console.log(error);
     }
-  }
-  let handleDelete = async (id) => {
+  };
+
+  const handleDelete = async (id) => {
     try {
       const confirmDelete = window.confirm("Are you sure you want to delete the data?");
       if (confirmDelete) {
@@ -34,13 +35,14 @@ function Userlist() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
   const getRowId = (row) => row._id;
 
   const columns = [
     { field: 'username', headerName: 'Username', flex: 1 },
     { field: 'email', headerName: 'E-Mail', flex: 1 },
-    { field: 'phone', headerName: 'Phone Number', flex: 1 },
+    { field: 'phone', headerName: 'Phone', flex: 1 }, // Replaced 'contactNumber' with 'phone'
     { field: 'isAdmin', headerName: 'IsAdmin', flex: 1 },
     {
       field: 'actions',
@@ -60,14 +62,9 @@ function Userlist() {
     <>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className="h3 mb-0 text-gray-800">User-List</h1>
-        {/* <Link to="/portal/create-user" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-          <FontAwesomeIcon icon={faUser} className="creatinguser mr-2" />
-          Create User
-        </Link> */}
       </div>
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid
-          
           rows={userList}
           columns={columns}
           pageSize={5}

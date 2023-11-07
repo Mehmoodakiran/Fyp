@@ -1,146 +1,152 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { Button, TextField, Grid, Typography, Container } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  Container,
-  Card,
-  CardContent,
-  TextField,
-  Button,
-  Grid,
-  Typography
-} from '@mui/material';
+import axios from 'axios';
 
-function Register() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+const Register = () => {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [phone, setPhone] = useState('');
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    const [formErrors, setFormErrors] = useState({});
 
-  const handleRegister = () => {
-    // Validate form fields before registration
-    if (!username || !email || !phone || !password) {
-      alert('Please fill in all fields');
-      return;
-    }
+    const handleValidation = () => {
+        let errors = {};
+        let formIsValid = true;
 
-    // Perform email and phone validation - example regex used here
-    const emailPattern = /\S+@\S+\.\S+/;
-    const phonePattern = /^[0-9]{10}$/;
-    if (!emailPattern.test(email) || !phonePattern.test(phone)) {
-      alert('Please enter a valid email and phone number');
-      return;
-    }
+        // Username validation
+        if (!username || username.length < 5 || username.length > 20) {
+            formIsValid = false;
+            errors["username"] = "Username must be between 5 and 20 characters";
+        }
 
-    const apiUrl = 'http://localhost:8800/api/auth/register';
-    const user = {
-      username: username,
-      email: email,
-      phone: phone,
-      password: password,
+        // Email validation
+        if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+            formIsValid = false;
+            errors["email"] = "Please enter a valid email address";
+        }
+
+        // Password validation
+        if (!password || password.length < 6) {
+            formIsValid = false;
+            errors["password"] = "Password must be at least 6 characters";
+        }
+
+        // Phone validation (11 digits)
+        if (!phone || !/^\d{11}$/.test(phone)) {
+            formIsValid = false;
+            errors["phone"] = "Please enter a valid 11-digit phone number";
+        }
+
+        setFormErrors(errors);
+        return formIsValid;
     };
 
-    axios.post(apiUrl, user)
-      .then((response) => {
-        console.log('Registration successful!', response);
-        navigate('/login');
-      })
-      .catch((error) => {
-        console.error('Error registering user:', error);
-      });
-  };
+    const handleRegister = async () => {
+        const isValid = handleValidation();
 
-  return (
-    <Container
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh'
-      }}
-    >
-      <Card sx={{ minWidth: 275 }}>
-        <CardContent>
-          <Container maxWidth='sm'>
-            <Grid container spacing={4}>
-              <Grid item xs={12}>
-                <Typography variant="h4" align="center">
-                  Register
-                </Typography>
-              </Grid>
+        if (isValid) {
+            const user = {
+                username: username,
+                email: email,
+                password: password,
+                phone: phone
+            };
 
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  label="Enter Username"
-                  id="username"
-                  sx={{ borderRadius: '25px' }}
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  label="Enter your email"
-                  id="email"
-                  sx={{ borderRadius: '25px' }}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  label="Phone"
-                  id="phone"
-                  sx={{ borderRadius: '25px' }}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  variant="outlined"
-                  type="password"
-                  label="Password"
-                  id="password"
-                  sx={{ borderRadius: '25px' }}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={8}>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  sx={{ borderRadius: '25px', ml: 10, mr: 5 }}
-                  onClick={handleRegister}
-                >
-                  Register
-                </Button>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body2" align="center">
-                  I have an Account!
-                  <Link to="/login" variant="body2">
-                    {" Login "}
-                  </Link>
+            try {
+                await axios.post('http://localhost:8800/api/auth/register', user);
+                console.log("User registered successfully");
+                navigate('/Login');
+            } catch (error) {
+                console.log("Error during registration:", error);
+            }
+        } else {
+            console.log("Form has errors. Please fix them.");
+        }
+    };
+
+    return (
+        <Container sx={{ mt: 10, padding: '20px', borderRadius: '5px' }} component="main" maxWidth="xs">
+            <div>
+                <Typography component="h1" variant="h5" style={{ marginBottom: '20px' }}>
+                    Sign Up
                 </Typography>
-              </Grid>
-            </Grid>
-          </Container>
-        </CardContent>
-      </Card>
-    </Container>
-  );
-}
+                <form>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
+                        autoFocus
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        error={formErrors.username ? true : false}
+                        helperText={formErrors.username}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        error={formErrors.email ? true : false}
+                        helperText={formErrors.email}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="phone"
+                        label="Phone"
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        error={formErrors.phone ? true : false}
+                        helperText={formErrors.phone}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="password"
+                        label="Password"
+                        type="password"
+                        autoComplete="new-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        error={formErrors.password ? true : false}
+                        helperText={formErrors.password}
+                    />
+
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        onClick={handleRegister}
+                        style={{ backgroundColor: 'rgb(49, 200, 90)' }}
+                    >
+                        Sign Up
+                    </Button>
+                </form>
+                <Grid container justifyContent="flex-end" style={{ marginTop: '20px' }}>
+                    <Grid item>
+                        <Link to="/Login" variant="body2">
+                            Already have an account? Sign in
+                        </Link>
+                    </Grid>
+                </Grid>
+            </div>
+        </Container>
+    );
+};
 
 export default Register;

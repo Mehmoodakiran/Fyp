@@ -1,9 +1,14 @@
 import React from 'react';
 import './Destinations.scss';
 import shingrilla from '../../Images/shingrilla.jpg';
-import shiger from '../../Images/shiger.jpg';
-import img3 from '../../Images/img2.jpg';
-import video1 from '../../Images/shriglla.mp4';
+import video1 from '../../Videos/shriglla.mp4';
+import MountainV from '../../Images/MountainV.jpg';
+import video3 from '../../Videos/MountainV.mp4';
+import Mashbrum from '../../Images/M.jpg';
+import video2 from '../../Videos/Mashabrum.mp4';
+import kallisto from '../../Images/kallisto.jpg';
+import video4 from '../../Videos/royal.mp4';
+
  // Provide the actual video paths
 import Navbar from '../../components/navbar/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,35 +16,35 @@ import { Link, useNavigate } from 'react-router-dom';
 const destinations = [
   {
     id: 1,
-    name: 'Shingrilla Hotel',
+    name: 'Shingrilla Hotel Skardu',
     image: shingrilla,
     description:
-      'Skardu is a beautiful town in Pakistan and is known for its stunning landscapes, including mountains, lakes, and valleys.',
+      'Shingrilla Hotel is a beautiful town in Pakistan and is known for its stunning landscapes, including mountains, lakes, and valleys.',
     video: video1,
   },
   {
     id: 2,
-    name: 'Khaplu',
-    image: img3,
+    name: 'Mashbrum Hotel Skardu',
+    image: Mashbrum,
     description:
-      'Khaplu is a picturesque town in Pakistan, offering breathtaking views and a peaceful atmosphere.',
-    video: video1,
+      'Mashbrum Hotel is a picturesque town in Pakistan, offering breathtaking views and a peaceful atmosphere.',
+    video: video2,
   },
   {
     id: 3,
-    name: 'Shigar',
-    image: shiger,
+    name: 'Mountain View Hotel Skardu',
+    image: MountainV,
     description:
-      'Shigar is a historic town in Pakistan, famous for its ancient architecture and cultural heritage.',
-    video: video1,
+      'Mountain View is a historic town in Pakistan, famous for its ancient architecture and cultural heritage.',
+    video: video3,
   },
   {
     id: 4,
-    name: 'kharmang',
-    image: shingrilla,
+    name: 'Kallisto Hotel Skardu',
+    image: kallisto,
     description:
-      'kharmang is a serene village in Pakistan with lush green landscapes and a tranquil environment.',
-   video: video1,
+      'Kallisto Hotel  is a serene village in Pakistan with lush green landscapes and a tranquil environment.',
+   video: video4,
   },
 ];
 
