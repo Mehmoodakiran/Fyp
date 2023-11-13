@@ -5,8 +5,9 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { format } from 'date-fns'; // Import format function from date-fns
-
+import { useParams } from "react-router-dom";
 function BookingList() {
+  const { destination, startDate, endDate, adult, children, room } = useParams();
   const [bookingList, setBookingList] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -16,23 +17,26 @@ function BookingList() {
     getBookings();
   }, []);
 
+ 
   const getBookings = async () => {
     try {
-      const bookings = await axios.get(apiUrl, { withCredentials: true });
-      const formattedBookings = bookings.data.map((booking) => ({
+      const response = await axios.get(apiUrl, { withCredentials: true });
+      const fetchedBookings = response.data; 
+  
+      const formattedBookings = fetchedBookings.map((booking) => ({
         ...booking,
-      //   maxPeople: booking.maxPeople, // If maxPeople exists in the API response
-      // price: booking.price,
-        toDate: format(new Date(booking.toDate), 'MM/dd/yyyy'), // Format toDate
-        fromDate: format(new Date(booking.fromDate), 'MM/dd/yyyy'), // Format fromDate
-        
+        startDate: format(new Date(booking.fromDate), 'MM/dd/yyyy'), 
+        endDate: format(new Date(booking.toDate), 'MM/dd/yyyy'), 
       }));
+  
       setBookingList(formattedBookings);
       setLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
+  
+  
 
   const getRowId = (row) => row._id;
 
@@ -40,10 +44,8 @@ function BookingList() {
     { field: 'userName', headerName: 'User Name', flex: 1 },
     { field: 'hotelName', headerName: 'Hotel Name', flex: 1 },
     { field: 'roomName', headerName: 'Room Id', flex: 1 },
-    // { field: 'maxPeople', headerName: 'Max People', flex: 1 },
-    // { field: 'price', headerName: 'Price', flex: 1 },
-    { field: 'toDate', headerName: 'To Date', flex: 1 },
-    { field: 'fromDate', headerName: 'From Date', flex: 1 },
+    { field: 'startDate', headerName: 'Start Date', flex: 1 }, 
+    { field: 'endDate', headerName: 'End Date', flex: 1 }, 
     {
       field: 'actions',
       headerName: 'Actions',
@@ -57,6 +59,7 @@ function BookingList() {
       ),
     },
   ];
+  
 
   const handleDelete = async (id) => {
     try {
