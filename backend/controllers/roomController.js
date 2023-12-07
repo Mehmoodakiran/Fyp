@@ -46,8 +46,7 @@ export const updateRoom = async (req, res, next) => {
         next(err);
     }
 };
-export const updateRoomAvailability = async (req, res, next) => {
-    console.log("api calling")
+export const updateRoomAvailability = async(req, res, next) => {
     try {
         await Room.updateOne({ "roomNumbers._id": req.params.id }, {
             $push: {

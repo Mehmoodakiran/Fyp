@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Comment from '../models/reviewmodels.js'
+
 const HotelSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -29,15 +31,21 @@ const HotelSchema = new mongoose.Schema({
     min: 0,
     max: 5,
   },
-  rooms: {
-    type: Array,
-  },
+  rooms: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Room',
+    required: true,
+  }],
   cheapestPrice: {
     type: Number,
   },
   featured: {
     type: Boolean,
   },
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comment', 
+  }]
 });
 
 export default mongoose.model("Hotel", HotelSchema)

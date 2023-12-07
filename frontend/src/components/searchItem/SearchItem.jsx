@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import "./searchItem.css";
 
-const SearchItem = ({ item,photos }) => {
+const SearchItem = ({ item, photos }) => {
 
   return (
     <div className="searchItem">
       {photos && photos.length > 0 ? (
-        <img src={"http://localhost:8800"+photos[0].replace('public', '')} alt="img icon" className="siImg" />
+        <img src={"http://localhost:8800" + photos[0].replace('public', '')} alt="img icon" className="siImg" />
       ) : (
         <p>No photos available</p> // Add a message if there are no photos
       )}
@@ -32,8 +32,11 @@ const SearchItem = ({ item,photos }) => {
           <span className="siPrice">Price{item.cheapestPrice}</span>
           <span className="siTaxOp">Includes taxes and fees</span>
           <Link to={`/hotels/${item._id}`}>
-          <button className="siCheckButton">See availability</button>
+            <button className="siCheckButton">See availability</button>
           </Link>
+          {/* <Link to={`/hotels`}>
+            <button className="siDetailsButton">View Details</button>
+          </Link> */}
         </div>
       </div>
     </div>
@@ -41,41 +44,4 @@ const SearchItem = ({ item,photos }) => {
 };
 
 export default SearchItem;
-// import "./searchItem.css";
-// import img from "../../Images/mountv214.jpg";
-// const SearchItem = () => {
-//   return (
-//     <div className="searchItem">
-//         <img src={img} alt="" className="siImg" />
-//       <div className="siDesc">
-//         <h1 className="siTitle">Tower Street Apartment</h1>
-//         <div className="siDistance">500m from center</div>
-//         <span className="siTaxiOp"> Free Airport taxi</span>
-//         <span className="siSubtitle">Studio Apartment with Air Conditioning</span>
-//         <span className="siFeature">  Entire studio • 1 bathroom •  1 full bed</span>
-//         <span className="siCancelOp">Free Cancellation</span>
-//         <span className="siCancelOpSubtitle">
-//           You can cancel later,so lock in this great price today!
-//         </span>
-        
-//       </div>
 
-//       <div className="siDetails">
-//         <div className="siRating">
-//           <span>Excellent</span>
-//           <button>8.9</button>
-//         </div>
-//         <div className="siDetailTexts">
-//           <span className="siPrice">Price 500</span>
-//           <span className="siTaxOp">Includes taxes and fees</span>
-//           <button className="siCheckButton">See availability</button>
-//         </div>
-//       </div>
-      
-//     </div>
-    
-    
-//   );
-// };
-
-// export default SearchItem;

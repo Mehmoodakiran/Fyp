@@ -3,11 +3,12 @@ import { Button, TextField, Grid, Typography, Container } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [contactNumber, setContactNumber] = useState('');
+    const [phone, setPhone] = useState('');
     const navigate = useNavigate();
 
     const [formErrors, setFormErrors] = useState({});
@@ -47,7 +48,7 @@ const Register = () => {
                 username: username,
                 email: email,
                 password: password,
-                contactNumber: contactNumber
+                phone: phone
             };
 
             try {
@@ -100,11 +101,11 @@ const Register = () => {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="contactNumber"
+                        name="phone"
                         label="Contact Number"
                         type="text"
-                        value={contactNumber}
-                        onChange={(e) => setContactNumber(e.target.value)}
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                     />
                     <TextField
                         variant="outlined"

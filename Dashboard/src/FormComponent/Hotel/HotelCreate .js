@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import axios from 'axios';
+import Typography from '@mui/material/Typography';
 
 const CreateHotel = () => {
     const [formData, setFormData] = React.useState({
@@ -15,27 +14,20 @@ const CreateHotel = () => {
         address: '',
         distance: '',
         photos: [],
-        rooms: [], // Add a field for rooms
         title: '',
         desc: '',
         cheapestPrice: 0,
         featured: false,
     });
-    const [successMessage, setSuccessMessage] = useState(''); // Define successMessage state variable
-    const [error, setError] = useState('');
 
-    const addRoom = () => {
-        setFormData({
-            ...formData,
-            rooms: [...formData.rooms, { name: '', description: '' }],
-        });
-    };
+    // Define errorMessage state variable
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const apiUrl = 'http://localhost:8800/api/hotels/';
-    
+
             const hotel = {
                 name: formData.name,
                 type: formData.type,
@@ -47,39 +39,48 @@ const CreateHotel = () => {
                 cheapestPrice: formData.cheapestPrice,
                 featured: formData.featured,
                 photos: formData.photos,
-                rooms: formData.rooms,
             };
-            if (!formData.name || !formData.distance ) {
+            if (!formData.name || !formData.distance) {
                 setError('Name, distance, and address fields are required.');
                 return;
             }
-    
+
             const existingHotels = await axios.get(apiUrl);
-            const exists = existingHotels.data.some(hotel => 
+            const exists = existingHotels.data.some((hotel) =>
                 hotel.name === formData.name && hotel.distance === formData.distance
             );
-    
+
             if (exists) {
-                setError('Hotel Name and Owner Name already exist.');
+                alert(' Please choose a different one.');
                 return;
             }
-    
+
             const response = await axios.post(apiUrl, hotel, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-    
-            setSuccessMessage('Your hotel is registered!');
+            setFormData({
+                name: '',
+                type: '',
+                city: '',
+                address: '',
+                distance: '',
+                photos: [],
+                title: '',
+                desc: '',
+                cheapestPrice: 0,
+                featured: false,
+            });
+
+            alert('Your hotel is registered!');
             setError(''); // Clear the error when the submission is successful
             console.log(response.data);
         } catch (error) {
-            console.error("Error:", error);
+            console.error('Error:', error);
         }
     };
-    
-
 
     const handleChange = (e) => {
         const { name, value, type, checked, files } = e.target;
@@ -89,18 +90,6 @@ const CreateHotel = () => {
                 ...formData,
                 photos: files[0],
             });
-        } else if (name.startsWith('rooms[')) {
-            const roomIndex = name.match(/\[(\d+)\]/)[1];
-            const fieldName = name.match(/\.\w+/)[0].substring(1);
-
-            setFormData({
-                ...formData,
-                rooms: formData.rooms.map((room, index) =>
-                    index == roomIndex
-                        ? { ...room, [fieldName]: type === 'checkbox' ? checked : value }
-                        : room
-                ),
-            });
         } else {
             setFormData({
                 ...formData,
@@ -108,12 +97,11 @@ const CreateHotel = () => {
             });
         }
     };
+
     return (
-      
         <Container>
-        
             <Box component="form" onSubmit={handleSubmit}>
-            <TextField
+                <TextField
                     fullWidth
                     label="Owner Name"
                     name="distance"
@@ -122,9 +110,8 @@ const CreateHotel = () => {
                     margin="normal"
                     placeholder="Please Enter Owner Name"
                     required
-                    
                 />
-            <TextField
+                <TextField
                     fullWidth
                     label="Hotel Name"
                     name="name"
@@ -164,7 +151,6 @@ const CreateHotel = () => {
                     placeholder="Please Enter Your Address"
                     required
                 />
-              
                 <TextField
                     fullWidth
                     label="Title"
@@ -187,69 +173,38 @@ const CreateHotel = () => {
                 />
                 <TextField
                     fullWidth
-                    label="Cheapest Price"
+                    label="Contact Number"
                     name="cheapestPrice"
                     type="number"
                     value={formData.cheapestPrice}
                     onChange={handleChange}
                     margin="normal"
                 />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            name="featured"
-                            checked={formData.featured}
-                            onChange={handleChange}
-                            color="primary"
-                        />
-                    }
-                    label="Featured"
+                <input
+                    type="file"
+                    accept="image/*"
+                    name="photos"
+                    multiple
+                    onChange={handleChange}
+                    style={{ display: 'none' }}
+                    id="select-image"
                 />
-                {formData.rooms.map((room, index) => (
-                    <div key={index}>
-                        <TextField
-                            fullWidth
-                            label={`Room ${index + 1} Name`}
-                            name={`rooms[${index}].name`}
-                            value={room.name}
-                            onChange={handleChange}
-                            margin="normal"
-                        />
-                        <TextField
-                            fullWidth
-                            label={`Room ${index + 1} Description`}
-                            name={`rooms[${index}].description`}
-                            value={room.description}
-                            onChange={handleChange}
-                            margin="normal"
-                        />
-                    </div>
-                ))}
-
-
-                   <input
-                   type="file"
-                   accept="image/*"
-                   name="photos"
-                   multiple
-                   onChange={handleChange}
-                   style={{ display: 'none' }}
-                   id="select-image"
-               />
-               <label htmlFor="select-image">
-                   <Button component="span" variant="outlined" style={{ color: '#3faa46' }}>
-                       Select Your Hotel Pictures
-                   </Button>
-               </label>
-               <Button type="submit" variant="contained" style={{ backgroundColor: '#3faa46', color: 'white' }}>
+                <label htmlFor="select-image">
+                    <Button component="span" variant="outlined" style={{ color: '#3faa46' }}>
+                        Please Upload Your Hotel Image
+                    </Button>
+                </label>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    style={{ backgroundColor: '#3faa46', color: 'white' }}
+                >
                     Submit
                 </Button>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-
-               {successMessage && <p>{successMessage}</p>}
-           </Box>
-       </Container>
-   );
+            </Box>
+        </Container>
+    );
 };
 
 export default CreateHotel;

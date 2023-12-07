@@ -6,7 +6,7 @@ import axios from 'axios';
 const CreateBooking = () => {
   const [formData, setFormData] = useState({
     hotelName: '',
-    roomName: '',
+    // roomName: '',
     userName: '',
     toDate: '',
     fromDate: '',
@@ -58,14 +58,14 @@ const CreateBooking = () => {
         onChange={handleChange}
         margin="normal"
       />
-      <TextField
+      {/* <TextField
         fullWidth
         label="Room Name"
         name="roomName"
         value={formData.roomName}
         onChange={handleChange}
         margin="normal"
-      />
+      /> */}
          {/* <TextField
         fullWidth
         label="Max People"

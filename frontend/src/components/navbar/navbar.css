@@ -1,92 +1,131 @@
-
-.navbar {
-    background-color:  rgb(49, 200, 90); 
-    box-shadow: 0px 2px 4px hsla(121, 45%, 67%, 0.1);
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    background-color:green;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
-    color: grey;
-    
-}
-
-.navContainer {
+    color: white;
+  }
+  
+  .navContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 1024px;
     margin: 0 auto;
     padding: 0 20px;
-}
-
-.logo {
+  }
+  
+  .logo {
     font-size: 24px;
     font-weight: bold;
-    color:gray;
+    color: white;
     padding: 8px 15px;
     cursor: pointer;
     background-color: transparent;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-.logo:hover{
-    background-color: white;
-    color: grey;  
-}
-.menuButton {
-    display: none; /* Hide the menu button by default */
+  }
+  
+  .logo:hover {
+    background-color: #3faa46;
+  }
+  
+  .menuButton {
+    display: none;
     font-size: 20px;
     background-color: transparent;
     border: none;
     cursor: pointer;
-    color: grey;
-}
-
-.navitems {
+    color: white;
+  }
+  
+  .navitems {
     display: flex;
     align-items: center;
-}
-
-.navButton {
+  }
+  .custom-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .left-content {
+    flex-grow: 1;
+  }
+  
+  .center-content {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .right-content {
+    flex-grow: 1;
+    text-align: right;
+  }
+  
+  
+  .navButton {
     margin-left: 20px;
     border: none;
     padding: 8px 15px;
     cursor: pointer;
-    color:grey;
+    color: white;
     background-color: transparent;
     border: 2px solid #3faa46;
-   text-decoration: none;
+    text-decoration: none;
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.navButton:hover {
+  }
+  
+  .navButton:hover {
     background-color: #3faa46;
     color: white;
-}
-.Logo{
-    width: 5px;
-}
-/* Media query for screens with a maximum width of 768px */
-@media (max-width: 768px) {
+  }
+  
+  /* Dropdown styles */
+  .dropdown-toggle {
+    color: white;
+    font-size: 17px;
+    margin-left: 8px;
+    border: none;
+    background-color: #3faa46;
+  }
+  
+  .dropdown-toggle:hover {
+    background-color: #3faa46;
+  }
+  
+  /* Media query for screens with a maximum width of 768px */
+  @media (max-width: 768px) {
     .navContainer {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
     }
-    
+  
     .menuButton {
-        display: block; /* Show the menu button for smaller screens */
+      display: block;
     }
-    
+  
     .navitems {
-        display: none; /* Hide the navigation items initially */
-        flex-direction: column;
-        align-items: flex-start;
-        margin-top: 10px;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 10px;
     }
-
+  
     .navButton {
-        margin: 5px 0;
+      margin: 5px 0;
     }
-
+  
     .navContainer.active .navitems {
-        display: flex; /* Show navigation items when the menu button is clicked */
+      display: flex;
     }
-}
+  }
+  

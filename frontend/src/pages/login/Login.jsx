@@ -6,6 +6,8 @@ import axios from "axios";
 import { Link } from 'react-router-dom';
 import { REACT_APP_URL } from "../../constant/url";
 import "./login.css";
+import { Home } from "@mui/icons-material";
+
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -44,6 +46,7 @@ const Login = () => {
 
   return (
     <Container sx={{ mt: 10, padding: '20px', borderRadius: '5px' }} component="main" maxWidth="xs">
+     <Home/>
     <div className="login-form">
         <Typography component="h1" variant="h5">
           Login

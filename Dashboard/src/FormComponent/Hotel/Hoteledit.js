@@ -61,7 +61,7 @@ import { useFormik } from 'formik';
         formData.append("distance", values.distance);
         formData.append("title", values.title);
         formData.append("desc", values.desc);
-        formData.append("cheapestPrice", values.cheapestPrice);
+        // formData.append("cheapestPrice", values.cheapestPrice);
     
         // Append the "featured" field as a boolean
         formData.append("featured", values.featured ? "true" : "false");
@@ -146,7 +146,7 @@ import { useFormik } from 'formik';
               <span style={{ color: 'red' }}>{myFormik.errors.address}</span>
             </div>
             <div className="form-group col-md-6">
-              <label>Distance</label>
+              <label>Owner name</label>
               <input
                 name="distance"
                 value={myFormik.values.distance}
@@ -180,7 +180,7 @@ import { useFormik } from 'formik';
             </div>
           </div>
           <div className="form-group col-md-6">
-              <label>cheapestPrice</label>
+              <label>Cheapest Price</label>
               <input
                 name="type"
                 value={myFormik.values.type}

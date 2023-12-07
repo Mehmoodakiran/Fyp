@@ -37,6 +37,18 @@ function HotelList() {
     { field: 'desc', headerName: 'Description', flex: 1 },
     { field: 'cheapestPrice', headerName: 'Cheapest Price', flex: 1 },
     { field: 'featured', headerName: 'Featured', flex: 1 },
+    {
+      field: 'comments',
+      headerName: 'Comments',
+      flex: 1,
+      renderCell: (params) => (
+        <ul>
+          {params.row.comments.map((comment, index) => (
+            <li key={index}>{`Comment ${index + 1}: ${comment.text}`}</li>
+          ))}
+        </ul>
+      ),
+    },
     // { field: 'rooms', headerName: 'Rooms', flex: 1, renderCell: (params) => (
     //   <ul>
     //     {params.row.rooms.map((room, index) => (

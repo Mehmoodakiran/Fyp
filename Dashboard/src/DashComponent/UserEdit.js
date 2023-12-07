@@ -1,114 +1,117 @@
-import axios from 'axios';
-import { useFormik } from 'formik';
+// UserEdit.js
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function UserEdit() {
   const params = useParams();
-  const [isLoading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate =useNavigate();
+  const [user, setUser] = useState({});
+  const [isLoading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const myFormik = useFormik({
-    initialValues: {
-      username: '',
-      email: '',
-    },
-    validate: (values) => {
-      let errors = {};
-
-      if (!values.username) {
-        errors.username = 'Please enter a username';
-      } else if (values.username.length < 5) {
-        errors.username = 'Name shouldn\'t be less than 5 characters';
-      } else if (values.username.length > 25) {
-        errors.username = 'Name shouldn\'t be more than 25 characters';
-      }
-
-      if (!values.email) {
-        errors.email = 'Please enter an email';
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address';
-      }
-
-      return errors;
-    },
-    onSubmit: async (values) => {
+  useEffect(() => {
+    const fetchUserData = async () => {
       try {
-        setLoading(true);
-        await axios.put(`http://localhost:8800/api/users/${params.id}`, values);
+        const response = await axios.get(`http://localhost:8800/api/user/${params.id}`);
+        setUser(response.data);
         setLoading(false);
-        navigate('/portal/user-list');
       } catch (error) {
         console.log(error);
+        setError('Failed to fetch user data');
         setLoading(false);
       }
-    },
-  });
+    };
 
-  // Fetch user data and set it in Formik initialValues
-  const getUserData = async () => {
+    fetchUserData();
+  }, [params.id]);
+
+  const handleUpdate = async () => {
     try {
-      const response = await axios.get(`http://localhost:8800/api/users/${params.id}`);
-      const { username, email } = response.data;
-      myFormik.setValues({ username, email });
+      // Assuming you have an update API endpoint on the server
+      await axios.put(`http://localhost:8800/api/user/${params.id}`, user);
+      navigate(`/portal/user-view/${params.id}`);
+
     } catch (error) {
       console.log(error);
+      setError('Failed to update user');
     }
   };
 
-  useEffect(() => {
-    getUserData();
-  }, [params.id]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
 
   return (
     <>
-      <h3><b>User Edit</b></h3>
-      <div className="container">
-        <form onSubmit={myFormik.handleSubmit}>
-          <div className="row">
-            <div className="col-lg-6">
-              <label>Username</label>
-              <input
-                name="username"
-                value={myFormik.values.username}
-                onChange={myFormik.handleChange}
-                type="text"
-                className={`form-control ${myFormik.errors.username ? 'is-invalid' : ''}`}
-              />
-              <span style={{ color: 'red' }}>{myFormik.errors.username}</span>
-            </div>
-            <div className="col-lg-6">
-              <label>Email</label>
-              <input
-                name="email"
-                value={myFormik.values.email}
-                onChange={myFormik.handleChange}
-                type="email"
-                className={`form-control ${myFormik.errors.email ? 'is-invalid' : ''}`}
-              />
-              <span style={{ color: 'red' }}>{myFormik.errors.email}</span>
-            </div>
-            <div className="col-lg-6">
-              <label>Phone</label>
-              <input
-                name="phone"
-                value={myFormik.values.phone}
-                onChange={myFormik.handleChange}
-                type="number"
-                className={`form-control ${myFormik.errors.phone ? 'is-invalid' : ''}`}
-              />
-              <span style={{ color: 'red' }}>{myFormik.errors.phone}</span>
-            </div>
-          </div>
-          <div className="col-lg-4 mt-3">
-            <input
-              disabled={isLoading}
-              type="submit"
-              value={isLoading ? 'Updating...' : 'Update'}
-              className="btn btn-primary"
-            />
-          </div>
-        </form>
+      <div>User Edit - {params.id}</div>
+      <div className="card shadow mb-4">
+        <div className="card-header py-3">
+          <h6 className="m-0 font-weight-bold text-primary">User Edit</h6>
+        </div>
+        <div className="card-body">
+          {isLoading ? (
+            <img src="https://media.giphy.com/media/ZO9b1ntYVJmjZlsWlm/giphy.gif" alt="Loading" />
+          ) : error ? (
+            <div>Error: {error}</div>
+          ) : (
+            <form>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  name="username"
+                  value={user.username || ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">Phone Number</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="phone"
+                  name="phone"
+                  value={user.phone || ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">E-Mail</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  value={user.email || ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="isAdmin">IsAdmin</label>
+                <select
+                  className="form-control"
+                  id="isAdmin"
+                  name="isAdmin"
+                  value={user.isAdmin || ''}
+                  onChange={handleChange}
+                >
+                  <option value={true}>Yes</option>
+                  <option value={false}>No</option>
+                </select>
+              </div>
+              <button type="button" className="btn btn-primary" onClick={handleUpdate}>
+                Update
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     </>
   );

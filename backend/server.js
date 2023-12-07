@@ -9,15 +9,9 @@ import hotelsRoute from "./routes/hotelRoutes.js";
 import roomsRoute from "./routes/roomsRoutes.js";
 import bookingsRoute from "./routes/bookingsRoutes.js";
 import uploadRoute from "./routes/fileRoutes.js";
+import reviewRoute from "./routes/commentsReview.js"; 
 import path ,{ dirname }from "path";
 import { fileURLToPath } from 'url';
-
-
-
-
-
-
-
 const app = express();
 dotenv.config();
 
@@ -48,10 +42,7 @@ app.use("/api/hotels", hotelsRoute);
 app.use("/api/rooms", roomsRoute);
 app.use("/api/bookings", bookingsRoute);
 app.use("/api/file", uploadRoute);
-
-
-
-
+app.use("/api/review", reviewRoute);
 
 app.use((err, req, res, next) => {
     console.log("error", err)

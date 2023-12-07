@@ -38,7 +38,7 @@ function Sidebar() {
                 </Link>
             </li>
             <li className="nav-item">
-                <Link className="nav-link" to="/portal/bookings-list">
+                <Link className="nav-link" to="/portal/booking-list">
                     <FontAwesomeIcon icon={faBook} style={{ marginRight: "0.5rem" }} />
                     <span style={{ fontSize: "16px" }}>Booking</span>
                 </Link>

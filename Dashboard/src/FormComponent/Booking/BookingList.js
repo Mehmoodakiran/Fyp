@@ -1,95 +1,125 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
-import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
-import { format } from 'date-fns'; // Import format function from date-fns
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
+import { isValid, format } from "date-fns";
+
 function BookingList() {
-  const { destination, startDate, endDate, adult, children, room } = useParams();
   const [bookingList, setBookingList] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  const apiUrl = 'http://localhost:8800/api/bookings/';
+  const apiUrl = "http://localhost:8800/api/bookings/";
 
   useEffect(() => {
     getBookings();
   }, []);
 
- 
   const getBookings = async () => {
     try {
-      const response = await axios.get(apiUrl, { withCredentials: true });
-      const fetchedBookings = response.data; 
+      const bookingsResponse = await axios.get(apiUrl, { withCredentials: true });
+      console.log("Booking List Data:", bookingsResponse.data);
   
-      const formattedBookings = fetchedBookings.map((booking) => ({
-        ...booking,
-        startDate: format(new Date(booking.fromDate), 'MM/dd/yyyy'), 
-        endDate: format(new Date(booking.toDate), 'MM/dd/yyyy'), 
-      }));
+      const bookingsWithRoomNumbers = await Promise.all(
+        bookingsResponse.data.map(async (booking) => {
+          try {
+            const roomResponse = await axios.get(
+              `http://localhost:8800/api/rooms/${booking.roomName}`,
+              { withCredentials: true }
+            );
   
-      setBookingList(formattedBookings);
+            console.log("Room Response:", roomResponse.data);
+  
+            // Check if roomResponse.data has the expected structure
+            if (roomResponse.data && roomResponse.data.roomNumber !== undefined) {
+              const roomNumber = roomResponse.data.roomNumber;
+              console.log("Room Number:", roomNumber);
+  
+              return {
+                ...booking,
+                roomNumber,
+              };
+            } else {
+              console.error("Invalid room response:", roomResponse.data);
+              // Handle the case where roomNumber is not available
+              return booking;
+            }
+          } catch (roomError) {
+            console.error("Error fetching room:", roomError);
+            // Handle the error, you can choose to return the booking as is or handle it differently
+            return booking;
+          }
+        })
+      );
+  
+      setBookingList(bookingsWithRoomNumbers);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching bookings:", error);
     }
   };
   
   
-
-  const getRowId = (row) => row._id;
-
-  const columns = [
-    { field: 'userName', headerName: 'User Name', flex: 1 },
-    { field: 'hotelName', headerName: 'Hotel Name', flex: 1 },
-    { field: 'roomName', headerName: 'Room Id', flex: 1 },
-    { field: 'startDate', headerName: 'Start Date', flex: 1 }, 
-    { field: 'endDate', headerName: 'End Date', flex: 1 }, 
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 200,
-      renderCell: (params) => (
-        <div className="action-buttons">
-          <Link to={`/portal/booking-view/${params.row._id}`} className='btn btn-primary btn-sm'>View</Link>
-          <Link to={`/portal/booking-edit/${params.row._id}`} className='btn btn-info btn-sm'>Edit</Link>
-          <button onClick={() => handleDelete(params.row._id)} className='btn btn-danger btn-sm'>Delete</button>
-        </div>
-      ),
-    },
-  ];
   
 
-  const handleDelete = async (id) => {
+  
+  let handleDelete = async (id) => {
+    const deleteUrl = `${apiUrl}/${id}`;
     try {
-      const confirmDelete = window.confirm('Are you sure you want to delete the booking?');
+      const confirmDelete = window.confirm("Are you sure you want to delete the data?");
       if (confirmDelete) {
-        await axios.delete(`http://localhost:8800/api/bookings/${id}`);
+        await axios.delete(deleteUrl);
         getBookings();
       }
     } catch (error) {
       console.error(error);
     }
-  };
-  
+  }
+  const getRowId = (row) => row._id;
+  const columns = [
+    { field: "userName", headerName: "User Name", flex: 1 },
+    { field: "hotelName", headerName: "Hotel Name", flex: 1 },
+    // { field: "roomNumber", headerName: "Room Number", flex: 1 },
+    { field: "fromDate", headerName: "From Date", flex: 1 },
+    { field: "toDate", headerName: "To Date", flex: 1 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      flex: 1,
+      renderCell: (params) => (
+        <div>
+          <Link to={`/portal/booking-view/${params.row._id.toString()}`}
+className='btn btn-primary btn-sm'>View</Link>
+          {" | "}
+          <Link to={`/portal/booking-edit/${params.row._id}`} className='btn btn-info btn-sm'>Edit</Link>
+          {" | "}
+          <button onClick={() => handleDelete(params.row._id)}className='btn btn-danger btn-sm'>Delete</button>
+        </div>
+      ),
+    },
+  ];
+
+  const rowsWithFormattedDates = bookingList.map((booking) => ({
+    ...booking,
+    fromDate: booking.fromDate
+      ? format(new Date(booking.fromDate), "MM/dd/yyyy")
+      : null,
+    toDate: booking.toDate
+      ? format(new Date(booking.toDate), "MM/dd/yyyy")
+      : null,
+  }));
+
+  console.log("datessss", rowsWithFormattedDates);
 
   return (
     <div className="booking-list-container">
-      <div className="d-sm-flex align-items-center justify-content-between mb-4">
-        <h3 className="h3 mb-0 text-gray-800">Booking List</h3>
-        <Link to="/portal/create-booking" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-          <FontAwesomeIcon icon={faCalendar} className="creatingbooking mr-2" />
-          Create Booking
-        </Link>
-      </div>
       <div className="data-grid">
+      <h3 className="h3 mb-0 text-gray-800">Booking Details</h3>
         <DataGrid
-          rows={bookingList}
+          rows={rowsWithFormattedDates}
           columns={columns}
           pageSize={5}
           loading={isLoading}
-          getRowId={getRowId}
+          getRowId={(row) => row._id}
         />
       </div>
     </div>

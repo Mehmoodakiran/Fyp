@@ -16,50 +16,61 @@ function RoomList() {
   useEffect(() => {
     getRooms();
   }, []);
- 
-  
   const getRooms = async () => {
     try {
       const rooms = await axios.get(apiUrl, { withCredentials: true });
       setRoomList(rooms.data);
       setLoading(false);
+      console.log("Rooms updated:", roomList);
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const getRowId = (row) => row._id;
 
-  const columns = [
-    { field: 'title', headerName: 'Title', flex: 1 },
-    { field: 'price', headerName: 'Price', flex: 1 },
-    { field: 'maxPeople', headerName: 'Max People', flex: 1 },
-    { field: 'desc', headerName: 'Description', flex: 1 },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 200,
-      renderCell: (params) => (
-        <div className="action-buttons">
-          <Link to={`/portal/room-view/${params.row._id}`} className='btn btn-primary btn-sm'>View</Link>
-          <Link to={`/portal/rooms-edit/${params.row._id}`} className='btn btn-info btn-sm'>Edit</Link>
-          <button onClick={() => handleDelete(params.row._id)} className='btn btn-danger btn-sm'>Delete</button>
-        </div>
-      ),
-    },
-  ];
+ const columns = [
+  {
+    field: 'title',
+    headerName: 'Title',
+    flex: 1,
+    // valueGetter: (params) => {
+    //   const roomNumber = params.row.roomNumbers[0].number;
+    //   return `${params.row.title} ${roomNumber}`;
+    // },
+  },
+  { field: 'roomNumber', headerName: 'Room Number', flex: 1, valueGetter: (params) => params.row.roomNumbers[0].number },
+  { field: 'price', headerName: 'Price', flex: 1 },
+  { field: 'maxPeople', headerName: 'Max People', flex: 1 },
+  { field: 'desc', headerName: 'Description', flex: 1 },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    width: 200,
+    renderCell: (params) => (
+      <div className="action-buttons">
+        <Link to={`/portal/room-view/${params.row._id}`} className='btn btn-primary btn-sm'>View</Link>
+        <Link to={`/portal/rooms-edit/${params.row._id}`} className='btn btn-info btn-sm'>Edit</Link>
+        <button onClick={() => handleDelete(params.row._id)} className='btn btn-danger btn-sm'>Delete</button>
+      </div>
+    ),
+  },
+];
+
   const handleDelete = async (id) => {
     try {
       const confirmDelete = window.confirm("Are you sure you want to delete the room?");
       if (confirmDelete) {
         await axios.delete(`http://localhost:8800/api/rooms/${id}`, { withCredentials: true });
-        getRooms(); // Refresh room list after successful deletion
+        console.log("Room deleted successfully");
+        
+        // Update the state without making an additional API call
+        setRoomList((prevRoomList) => prevRoomList.filter((room) => room._id !== id));
       }
     } catch (error) {
       console.error(error);
     }
-  }
-  
+  };
   
 
   return (
