@@ -20,12 +20,12 @@ function AboutPage() {
                 </div>
                 <div className='class2'> 
                     <Typography variant="h3" gutterBottom>
-                        About Hotel Shangrila, Skardu
+                        About Travelics,Centralize Websites in Skardu Tourist Point of view
                     </Typography>
                     <hr className="hr" />
                     <Typography variant="body1" className="body1" style={{ color: 'white' }}>
-    Welcome to our state-of-the-art Hotel Shangrila in Skardu. We're dedicated to providing you with a luxurious stay and exceptional service.
-</Typography>
+   <b> Welcome to our state-of-the-Travelics. We're dedicated to providing you with a luxurious stay and exceptional service.
+   </b></Typography>
 
 
                     <Grid container spacing={3}>
