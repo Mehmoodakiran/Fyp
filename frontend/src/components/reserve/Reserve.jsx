@@ -185,6 +185,15 @@ const Reserve = ({ setOpen, hotelId, hotelName }) => {
   );
 };
 export default Reserve;
+// function hideLocalhostPort(message) {
+//   // Replace localhost:8800 with an empty string
+//   return message.replace(/localhost:8800/g, '');
+// }
+
+// // Example usage
+// const originalMessage = "Alert: localhost:8800 is not accessible";
+// const modifiedMessage = hideLocalhostPort(originalMessage);
+// console.log(modifiedMessage);
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 // import "./reserve.css";
