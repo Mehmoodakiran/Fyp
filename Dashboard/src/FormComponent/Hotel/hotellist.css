@@ -1,0 +1,18 @@
+/* HotelList.css */
+.hotel-list-container {
+  padding-left: 0px; /* Adjust the padding as needed */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.data-grid-container {
+  width: 200%; /* Ensure the DataGrid takes the full width */
+  margin-top: 20px; 
+  margin-left: 0px;/* Adjust the margin as needed */
+}
+
+/* Add more styling as needed */
